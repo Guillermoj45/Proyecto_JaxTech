@@ -1,5 +1,6 @@
 package org.jaxtech.jaxtech;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,7 +19,7 @@ public class AgregarProducto {
     public Image imagen;
 
     public void initialize() {
-        tipoChoice.getItems().addAll("Teclado", "Ratón", "Camara", "Auriculares", "Monitor", "Portatil", "Sobremesa");
+        tipoChoice.getItems().addAll("Teclado", "Ratón", "Camara", "Auriculares", "Monitor", "Portatil", "Sobremesa", "Otros");
     }
 
     public void seleccionarImagen() {
@@ -45,7 +46,16 @@ public class AgregarProducto {
         String stock = stockTextFiled.getText();
         String dimensiones = dimensionesTextFiled.getText();
         String tipo = tipoChoice.getValue();
-        System.out.println(imagen.getUrl());
+        if (nombre.isEmpty() || stock.isEmpty() || dimensiones.isEmpty() || tipo == null || imagen == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al agregar el producto");
+            alert.setContentText("Por favor, rellene todos los campos");
+            alert.show();
+            return;
+        }
+
+        System.out.println("Nombre: " + nombre + ", Stock: " + stock + ", Dimensiones: " + dimensiones + ", Tipo: " + tipo);
         // Guardar la imagen en la base de datos
         // Guardar el producto en la base de datos
     }

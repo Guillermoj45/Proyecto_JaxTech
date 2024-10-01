@@ -33,7 +33,7 @@
                                 <CheckBox layoutX="464.0" layoutY="279.0" mnemonicParsing="false" text="Apto para el gaming" />
                                 <Button layoutX="485.0" layoutY="363.0" mnemonicParsing="false" onAction="#seleccionarImagen" text="Subir imagen" />
                                 <ChoiceBox fx:id="tipoChoice" layoutX="480.0" layoutY="111.0" prefWidth="150.0" />
-                        <Button layoutX="582.0" layoutY="363.0" mnemonicParsing="false" text="Agregar" />
+                        <Button layoutX="582.0" layoutY="363.0" mnemonicParsing="false" onAction="#agregarProducto" text="Agregar" />
                             </children>
                         </AnchorPane>
                     </content>
