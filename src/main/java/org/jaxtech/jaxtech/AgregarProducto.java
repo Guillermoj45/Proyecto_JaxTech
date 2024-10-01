@@ -26,6 +26,7 @@ public class AgregarProducto {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
+
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             try {
@@ -37,5 +38,15 @@ public class AgregarProducto {
                 // Maneja la excepción según sea necesario
             }
         }
+    }
+
+    public void agregarProducto() {
+        String nombre = nombreTextFiled.getText();
+        String stock = stockTextFiled.getText();
+        String dimensiones = dimensionesTextFiled.getText();
+        String tipo = tipoChoice.getValue();
+        System.out.println(imagen.getUrl());
+        // Guardar la imagen en la base de datos
+        // Guardar el producto en la base de datos
     }
 }
