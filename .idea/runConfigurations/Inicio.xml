@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Inicio" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="org.jaxtech.jaxtech.HelloApplication" />
+    <module name="JaxTech" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
