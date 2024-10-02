@@ -41,11 +41,20 @@ public class AgregarProducto {
     public TableColumn<Usuario, String> columApellidos;
     @FXML
     public TableColumn<Usuario, Integer> columID;
+    @FXML
+    public Button buttModificarUsuario, buttCrearUsuario, buttEliminarUsuario;
+    @FXML
+    public ChoiceBox<String> filtroPagoChoice;
+    ObservableList<Usuario> usuarios;
 
     @FXML
     public void initialize() {
         tipoChoice.getItems().addAll("Teclado", "Ratón", "Camara", "Auriculares", "Monitor", "Portatil", "Sobremesa", "Otros");
-        ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
+        filtroPagoChoice.getItems().addAll("No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro");
+        filtroPagoChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> filtroUsuariosPorPago());
+
+        usuarios = FXCollections.observableArrayList();
+
         tablaUsuarios.setItems(usuarios);
         columID.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         columNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
@@ -62,6 +71,24 @@ public class AgregarProducto {
         usuarios.add(new Usuario(5, "Luis", "Lopez", "Calle Falsa 345", "Efectivo", "321654987", 4));
         usuarios.add(new Usuario(6, "Sara", "Fernandez", "Calle Falsa 678", "Paypal", "654987321", 6));
         usuarios.add(new Usuario(7, "Carlos", "Sanchez", "Calle Falsa 901", "Tarjeta", "987321654", 1));
+    }
+
+    public void filtroUsuariosPorPago(){
+        String filtro = filtroPagoChoice.getValue();
+        ObservableList<Usuario> usuariosfiltrados = FXCollections.observableArrayList();
+
+        if(!filtro.equals("No filtros")){
+            usuariosfiltrados.clear();
+            for(Usuario usuario : usuarios){
+                if(usuario.getTipoPago().equals(filtro)){
+                    usuariosfiltrados.add(usuario);
+                }
+            }
+            tablaUsuarios.setItems(usuariosfiltrados);
+        } else {
+            usuariosfiltrados.clear();
+            tablaUsuarios.setItems(usuarios);
+        }
     }
 
     public void seleccionarImagen() {
