@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="320.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jaxtech.jaxtech.CrearUsuario">
+    <children>
+        <Label fx:id="textTitulo" layoutX="57.0" layoutY="21.0" text="AGREGAR USUARIO" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="68.0" layoutY="84.0" text="Nombre" />
+        <TextField fx:id="fidelNombre" layoutX="124.0" layoutY="80.0" />
+        <Label layoutX="68.0" layoutY="125.0" text="Apellido" />
+        <TextField fx:id="fidelApellido" layoutX="124.0" layoutY="121.0" />
+        <Label layoutX="61.0" layoutY="190.0" text="Dirección" />
+        <TextField fx:id="fidelDireccion" layoutX="123.0" layoutY="186.0" />
+        <Label layoutX="40.0" layoutY="231.0" text="Tipo de pago" />
+        <ChoiceBox fx:id="choiceTipoPago" layoutX="123.0" layoutY="227.0" prefWidth="150.0" />
+      <Button layoutX="140.0" layoutY="263.0" mnemonicParsing="false" onAction="#guardarUsuario" text="Guardar" />
+      <Label layoutX="66.0" layoutY="159.0" text="Telefono" />
+      <TextField fx:id="fidelTelefono" layoutX="123.0" layoutY="155.0" />
+    </children>
+</AnchorPane>

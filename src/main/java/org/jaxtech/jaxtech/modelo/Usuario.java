@@ -20,6 +20,15 @@ public class Usuario {
         this.numTelefono = numTelefono;
         this.totalPedidos = totalPedidos;
     }
+    public Usuario(){
+        this.id = 0;
+        this.nombre = "";
+        this.apellidos = "";
+        this.direccion = "";
+        this.tipoPago = "";
+        this.numTelefono = "";
+        this.totalPedidos = 0;
+    }
 
     public int getId() {
         return id;

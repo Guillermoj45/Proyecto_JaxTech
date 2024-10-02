@@ -1,15 +1,25 @@
 package org.jaxtech.jaxtech.controlador;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+
+import org.jaxtech.jaxtech.CrearUsuario;
 import org.jaxtech.jaxtech.modelo.Usuario;
 
 import java.io.File;
+import java.io.IOException;
 
 public class AgregarProducto {
 
@@ -46,11 +56,13 @@ public class AgregarProducto {
     @FXML
     public ChoiceBox<String> filtroPagoChoice;
     ObservableList<Usuario> usuarios;
+    String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
+
 
     @FXML
     public void initialize() {
         tipoChoice.getItems().addAll("Teclado", "Ratón", "Camara", "Auriculares", "Monitor", "Portatil", "Sobremesa", "Otros");
-        filtroPagoChoice.getItems().addAll("No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro");
+        filtroPagoChoice.getItems().addAll(tiposPago);
         filtroPagoChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> filtroUsuariosPorPago());
 
         usuarios = FXCollections.observableArrayList();
@@ -71,6 +83,63 @@ public class AgregarProducto {
         usuarios.add(new Usuario(5, "Luis", "Lopez", "Calle Falsa 345", "Efectivo", "321654987", 4));
         usuarios.add(new Usuario(6, "Sara", "Fernandez", "Calle Falsa 678", "Paypal", "654987321", 6));
         usuarios.add(new Usuario(7, "Carlos", "Sanchez", "Calle Falsa 901", "Tarjeta", "987321654", 1));
+    }
+
+    public void activarBotones(){
+        buttEliminarUsuario.setDisable(false);
+        buttModificarUsuario.setDisable(false);
+    }
+
+    public void eliminarUsario(){
+        Usuario usuario = tablaUsuarios.getSelectionModel().getSelectedItem();
+        usuarios.remove(usuario);
+    }
+
+    public void crearUsuario(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jaxtech/jaxtech/crear_usuario.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Crear Usuario");
+            stage.show();
+
+            CrearUsuario controller = loader.getController();
+            AgregarProducto agregarProducto = this;
+            controller.inicio(agregarProducto,tiposPago);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void modificarUsuario(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jaxtech/jaxtech/crear_usuario.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Modificar Usuario");
+            stage.show();
+
+            CrearUsuario controller = loader.getController();
+            AgregarProducto agregarProducto = this;
+            controller.inicio(agregarProducto,tiposPago,tablaUsuarios.getSelectionModel().getSelectedItem());
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void agregarUsuario(Usuario usuario){
+        usuarios.add(usuario);
+    }
+
+    public void actualizarTabla(){
+        tablaUsuarios.refresh();
     }
 
     public void filtroUsuariosPorPago(){
