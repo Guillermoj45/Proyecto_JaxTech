@@ -13,4 +13,8 @@ module org.jaxtech.jaxtech {
 
     opens org.jaxtech.jaxtech to javafx.fxml;
     exports org.jaxtech.jaxtech;
+    exports org.jaxtech.jaxtech.modelo;
+    opens org.jaxtech.jaxtech.modelo to javafx.fxml;
+    exports org.jaxtech.jaxtech.controlador;
+    opens org.jaxtech.jaxtech.controlador to javafx.fxml;
 }
