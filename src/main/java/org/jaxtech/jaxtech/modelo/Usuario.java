@@ -1,6 +1,5 @@
 package org.jaxtech.jaxtech.modelo;
 
-import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Usuario {
