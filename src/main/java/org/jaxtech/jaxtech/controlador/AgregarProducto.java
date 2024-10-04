@@ -55,8 +55,8 @@ public class AgregarProducto {
     public Button buttModificarUsuario, buttCrearUsuario, buttEliminarUsuario;
     @FXML
     public ChoiceBox<String> filtroPagoChoice;
-    ObservableList<Usuario> usuarios;
-    String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
+    private ObservableList<Usuario> usuarios, usuariosfiltrados;
+    public String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
 
 
     @FXML
@@ -93,6 +93,8 @@ public class AgregarProducto {
     public void eliminarUsario(){
         Usuario usuario = tablaUsuarios.getSelectionModel().getSelectedItem();
         usuarios.remove(usuario);
+        if (usuariosfiltrados != null)
+            usuariosfiltrados.remove(usuario);
     }
 
     public void crearUsuario(){
@@ -136,6 +138,8 @@ public class AgregarProducto {
 
     public void agregarUsuario(Usuario usuario){
         usuarios.add(usuario);
+        if (usuariosfiltrados != null)
+            usuariosfiltrados.add(usuario);
     }
 
     public void actualizarTabla(){
@@ -144,7 +148,7 @@ public class AgregarProducto {
 
     public void filtroUsuariosPorPago(){
         String filtro = filtroPagoChoice.getValue();
-        ObservableList<Usuario> usuariosfiltrados = FXCollections.observableArrayList();
+        usuariosfiltrados = FXCollections.observableArrayList();
 
         if(!filtro.equals("No filtros")){
             usuariosfiltrados.clear();
