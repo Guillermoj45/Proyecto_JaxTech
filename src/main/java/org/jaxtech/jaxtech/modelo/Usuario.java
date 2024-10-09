@@ -31,7 +31,6 @@ public class Usuario {
     }
 
     public Usuario(String nombre, String apellidos, String direccion, String tipoPago, String numTelefono, int totalPedidos, String password) {
-        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.direccion = direccion;
