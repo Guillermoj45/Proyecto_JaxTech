@@ -66,7 +66,7 @@ public class CrearUsuario {
             usuario = new Usuario(fidelNombre.getText(),
                     fidelApellido.getText(),
                     fidelDireccion.getText(),
-                    choiceTipoPago.getValue().toString(),
+                    choiceTipoPago.getValue(),
                     fidelTelefono.getText(), 0,
                     fidelPassword.getText());
             if (!usuario.insert())
@@ -79,7 +79,7 @@ public class CrearUsuario {
             usuario.setApellidos(fidelApellido.getText());
             usuario.setNumTelefono(fidelTelefono.getText());
             usuario.setDireccion(fidelDireccion.getText());
-            usuario.setTipoPago(choiceTipoPago.getValue().toString());
+            usuario.setTipoPago(choiceTipoPago.getValue());
             usuario.update();
         }
         agregarProducto.actualizarTabla();
