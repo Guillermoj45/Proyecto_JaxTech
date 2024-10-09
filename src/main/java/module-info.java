@@ -10,6 +10,9 @@ module org.jaxtech.jaxtech {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.dotenv;
+    requires java.sql;
+    requires mysql.connector.j;
 
     opens org.jaxtech.jaxtech to javafx.fxml;
     exports org.jaxtech.jaxtech;

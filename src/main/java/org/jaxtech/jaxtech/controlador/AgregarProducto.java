@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 
 import org.jaxtech.jaxtech.CrearUsuario;
+import org.jaxtech.jaxtech.modelo.DDBB;
 import org.jaxtech.jaxtech.modelo.Usuario;
 
 import java.io.File;
@@ -61,11 +62,12 @@ public class AgregarProducto {
 
     @FXML
     public void initialize() {
+        new DDBB();
         tipoChoice.getItems().addAll("Teclado", "Ratón", "Camara", "Auriculares", "Monitor", "Portatil", "Sobremesa", "Otros");
         filtroPagoChoice.getItems().addAll(tiposPago);
         filtroPagoChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> filtroUsuariosPorPago());
 
-        usuarios = FXCollections.observableArrayList();
+        usuarios = Usuario.getUsuarios();
 
         tablaUsuarios.setItems(usuarios);
         columID.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
@@ -76,13 +78,6 @@ public class AgregarProducto {
         columNumTelefono.setCellValueFactory(cellData -> cellData.getValue().numTelefonoProperty());
         columnTotalPedidos.setCellValueFactory(cellData -> cellData.getValue().totalPedidosProperty().asObject());
 
-        usuarios.add(new Usuario(1, "Juan", "Perez", "Calle Falsa 123", "Tarjeta", "123456789", 5));
-        usuarios.add(new Usuario(2, "Maria", "Gonzalez", "Calle Falsa 456", "Efectivo", "987654321", 3));
-        usuarios.add(new Usuario(3, "Pedro", "Ramirez", "Calle Falsa 789", "Paypal", "456789123", 7));
-        usuarios.add(new Usuario(4, "Ana", "Martinez", "Calle Falsa 012", "Tarjeta", "789123456", 2));
-        usuarios.add(new Usuario(5, "Luis", "Lopez", "Calle Falsa 345", "Efectivo", "321654987", 4));
-        usuarios.add(new Usuario(6, "Sara", "Fernandez", "Calle Falsa 678", "Paypal", "654987321", 6));
-        usuarios.add(new Usuario(7, "Carlos", "Sanchez", "Calle Falsa 901", "Tarjeta", "987321654", 1));
     }
 
     public void activarBotones(){

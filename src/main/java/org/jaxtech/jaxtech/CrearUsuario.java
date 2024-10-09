@@ -19,11 +19,13 @@ public class CrearUsuario {
     @FXML
     public TextField fidelDireccion;
     @FXML
-    public ChoiceBox choiceTipoPago;
+    public ChoiceBox<String> choiceTipoPago;
     @FXML
     public Label textTitulo;
     @FXML
     public TextField fidelTelefono;
+    @FXML
+    public TextField fidelPassword;
 
     Usuario usuario;
     AgregarProducto agregarProducto;
@@ -45,7 +47,7 @@ public class CrearUsuario {
     }
 
     public void guardarUsuario() {
-        if (fidelNombre.getText().isEmpty() || fidelApellido.getText().isEmpty() || fidelDireccion.getText().isEmpty() || choiceTipoPago.getValue() == null) {
+        if (fidelNombre.getText().isEmpty() || fidelApellido.getText().isEmpty() || fidelDireccion.getText().isEmpty() || choiceTipoPago.getValue() == null || fidelTelefono.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Campos vacíos");
@@ -54,19 +56,32 @@ public class CrearUsuario {
             return;
         }
         if (usuario == null) {
-            usuario = new Usuario();
-            usuario.setNombre(fidelNombre.getText());
-            usuario.setApellidos(fidelApellido.getText());
-            usuario.setNumTelefono(fidelTelefono.getText());
-            usuario.setDireccion(fidelDireccion.getText());
-            usuario.setTipoPago(choiceTipoPago.getValue().toString());
+            if (fidelPassword.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Contraseña vacía");
+                alert.setContentText("Por favor, rellene la contraseña");
+                alert.showAndWait();
+                return;
+            }
+            usuario = new Usuario(fidelNombre.getText(),
+                    fidelApellido.getText(),
+                    fidelDireccion.getText(),
+                    choiceTipoPago.getValue().toString(),
+                    fidelTelefono.getText(), 0,
+                    fidelPassword.getText());
+            if (!usuario.insert())
+                usuario = null;
             agregarProducto.agregarUsuario(usuario);
         } else {
+            if (!fidelPassword.getText().isEmpty())
+                usuario.setPassword(fidelPassword.getText());
             usuario.setNombre(fidelNombre.getText());
             usuario.setApellidos(fidelApellido.getText());
             usuario.setNumTelefono(fidelTelefono.getText());
             usuario.setDireccion(fidelDireccion.getText());
             usuario.setTipoPago(choiceTipoPago.getValue().toString());
+            usuario.update();
         }
         agregarProducto.actualizarTabla();
 
