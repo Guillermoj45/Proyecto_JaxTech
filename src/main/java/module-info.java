@@ -13,6 +13,7 @@ module org.jaxtech.jaxtech {
     requires java.dotenv;
     requires java.sql;
     requires mysql.connector.j;
+    requires javafx.swing;
 
     opens org.jaxtech.jaxtech to javafx.fxml;
     exports org.jaxtech.jaxtech;

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 
 import org.jaxtech.jaxtech.modelo.DDBB;
+import org.jaxtech.jaxtech.modelo.Producto;
 import org.jaxtech.jaxtech.modelo.Usuario;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public class AgregarProducto {
     @FXML
     public TextField stockTextFiled;
     @FXML
-    public TextField dimensionesTextFiled;
+    public TextField precioTextFiled;
     @FXML
     public ChoiceBox<String> tipoChoice;
     @FXML
@@ -55,6 +56,7 @@ public class AgregarProducto {
     public Button buttModificarUsuario, buttCrearUsuario, buttEliminarUsuario;
     @FXML
     public ChoiceBox<String> filtroPagoChoice;
+    public CheckBox checkAptoGaming;
     private ObservableList<Usuario> usuarios, usuariosfiltrados;
     public String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
 
@@ -178,21 +180,47 @@ public class AgregarProducto {
     }
 
     public void agregarProducto() {
-        String nombre = nombreTextFiled.getText();
-        String stock = stockTextFiled.getText();
-        String dimensiones = dimensionesTextFiled.getText();
-        String tipo = tipoChoice.getValue();
-        if (nombre.isEmpty() || stock.isEmpty() || dimensiones.isEmpty() || tipo == null || imagen == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al agregar el producto");
-            alert.setContentText("Por favor, rellene todos los campos");
-            alert.show();
+        float precio;
+        int stock;
+        try {
+            precio = Float.parseFloat(precioTextFiled.getText());
+        } catch (NumberFormatException e) {
+            alerta("Error", "Precio no válido");
+            return;
+        }
+        try {
+            stock = Integer.parseInt(stockTextFiled.getText());
+        } catch (NumberFormatException e) {
+            alerta("Error", "Stock no válido");
             return;
         }
 
-        System.out.println("Nombre: " + nombre + ", Stock: " + stock + ", Dimensiones: " + dimensiones + ", Tipo: " + tipo);
-        // Guardar la imagen en la base de datos
-        // Guardar el producto en la base de datos
+        String nombre = nombreTextFiled.getText();
+        String tipo = tipoChoice.getValue();
+        Image imagen = productoImg.getImage();
+        boolean aptoGaming = checkAptoGaming.isSelected();
+
+        if (nombre.isEmpty() || tipo == null || imagen == null) {
+            alerta("Error", "Campos vacíos");
+            return;
+        }
+        System.out.println("Nombre: " + nombre + ", Stock: " + stock + ", Dimensiones: " + precio + ", Tipo: " + tipo + ", Imagen: " + imagen.getUrl());
+
+        Producto producto = new Producto(nombre, tipo, stock, precio, imagen, aptoGaming);
+        producto.insert();
+
+        nombreTextFiled.clear();
+        stockTextFiled.clear();
+        precioTextFiled.clear();
+        tipoChoice.setValue(null);
+        productoImg.setImage(null);
+        checkAptoGaming.setSelected(false);
+    }
+
+    private void alerta (String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(mensaje);
+        alert.showAndWait();
     }
 }
