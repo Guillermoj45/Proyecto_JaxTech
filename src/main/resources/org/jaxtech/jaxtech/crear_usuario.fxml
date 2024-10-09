@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="334.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jaxtech.jaxtech.CrearUsuario">
+<AnchorPane prefHeight="334.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jaxtech.jaxtech.controlador.CrearUsuario">
     <children>
         <Label fx:id="textTitulo" layoutX="57.0" layoutY="21.0" text="AGREGAR USUARIO" textAlignment="CENTER">
             <font>

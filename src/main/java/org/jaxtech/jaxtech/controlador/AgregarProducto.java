@@ -15,7 +15,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-import org.jaxtech.jaxtech.CrearUsuario;
 import org.jaxtech.jaxtech.modelo.DDBB;
 import org.jaxtech.jaxtech.modelo.Usuario;
 

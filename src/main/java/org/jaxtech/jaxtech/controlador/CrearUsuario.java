@@ -1,4 +1,4 @@
-package org.jaxtech.jaxtech;
+package org.jaxtech.jaxtech.controlador;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -6,7 +6,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.jaxtech.jaxtech.controlador.AgregarProducto;
 import org.jaxtech.jaxtech.modelo.Usuario;
 
 import java.util.Arrays;
