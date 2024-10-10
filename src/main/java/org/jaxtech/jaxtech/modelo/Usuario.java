@@ -51,9 +51,14 @@ public class Usuario {
     }
 
     public static ObservableList<Usuario> getUsuarios() {
-        String sql = "SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono, COUNT(p.id) AS Pedidos " +
-                "FROM usuarios u LEFT JOIN productos p ON u.id = p.id " +
-                "GROUP BY u.id;";
+        String sql = """
+                SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono,
+                        COUNT(p.id) AS Pedidos
+                FROM usuarios u
+                    LEFT JOIN pedidos p ON u.id = p.id_usuario
+                where eliminado = false
+                GROUP BY u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono;
+""";
         try (Connection conexion = DDBB.getConexion();
              PreparedStatement select = conexion.prepareStatement(sql);
              ResultSet resultado = select.executeQuery()) {
@@ -137,6 +142,19 @@ public class Usuario {
             update.setInt(7, this.getId());
             update.execute();
             System.out.print("Usuario actualizado correctamente");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void delete() {
+        String sql = "update usuarios set eliminado = true where id = ?";
+        Connection conexion = DDBB.getConexion();
+        try {
+            PreparedStatement delete = conexion.prepareStatement(sql);
+            delete.setInt(1, this.getId());
+            delete.executeUpdate();
+            System.out.print("Usuario eliminado correctamente");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -52,3 +52,6 @@ create or replace table pedidos (
                     on update cascade on DELETE set null
 );
 
+
+#Indices para mejorar la velocidad de las consultas
+create index idx_usuarios_eliminado on usuarios(eliminado);

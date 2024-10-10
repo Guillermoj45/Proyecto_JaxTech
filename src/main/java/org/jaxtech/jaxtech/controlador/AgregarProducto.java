@@ -35,7 +35,7 @@ public class AgregarProducto {
     @FXML
     public ImageView productoImg;
     @FXML
-    public Image imagen;
+    public Image imagen, imagenDefecto;
     @FXML
     public TableView<Usuario> tablaUsuarios;
     @FXML
@@ -79,6 +79,7 @@ public class AgregarProducto {
         columNumTelefono.setCellValueFactory(cellData -> cellData.getValue().numTelefonoProperty());
         columnTotalPedidos.setCellValueFactory(cellData -> cellData.getValue().totalPedidosProperty().asObject());
 
+        imagenDefecto = productoImg.getImage();
     }
 
     public void activarBotones(){
@@ -88,6 +89,7 @@ public class AgregarProducto {
 
     public void eliminarUsario(){
         Usuario usuario = tablaUsuarios.getSelectionModel().getSelectedItem();
+        usuario.delete();
         usuarios.remove(usuario);
         if (usuariosfiltrados != null)
             usuariosfiltrados.remove(usuario);
@@ -213,7 +215,7 @@ public class AgregarProducto {
         stockTextFiled.clear();
         precioTextFiled.clear();
         tipoChoice.setValue(null);
-        productoImg.setImage(null);
+        productoImg.setImage(imagenDefecto);
         checkAptoGaming.setSelected(false);
     }
 
