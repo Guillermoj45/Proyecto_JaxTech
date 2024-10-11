@@ -18,8 +18,9 @@ public class Usuario {
     String numTelefono;
     Integer totalPedidos;
     String password;
+    boolean admin;
 
-    public Usuario(int id, String nombre, String apellidos, String direccion, String tipoPago, String numTelefono, int totalPedidos, String password) {
+    public Usuario(int id, String nombre, String apellidos, String direccion, String tipoPago, String numTelefono, int totalPedidos, String password, boolean admin) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -28,9 +29,10 @@ public class Usuario {
         this.numTelefono = numTelefono;
         this.totalPedidos = totalPedidos;
         this.password = password;
+        this.admin = admin;
     }
 
-    public Usuario(String nombre, String apellidos, String direccion, String tipoPago, String numTelefono, int totalPedidos, String password) {
+    public Usuario(String nombre, String apellidos, String direccion, String tipoPago, String numTelefono, int totalPedidos, String password, boolean admin) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.direccion = direccion;
@@ -38,9 +40,10 @@ public class Usuario {
         this.numTelefono = numTelefono;
         this.totalPedidos = totalPedidos;
         this.password = password;
+        this.admin = admin;
     }
 
-    public Usuario(int id, String nombre, String apellidos, String direccion, String pago, String telefono, int totalPedidos){
+    public Usuario(int id, String nombre, String apellidos, String direccion, String pago, String telefono, int totalPedidos, boolean admin) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -48,12 +51,13 @@ public class Usuario {
         this.tipoPago = pago;
         this.numTelefono = telefono;
         this.totalPedidos = totalPedidos;
+        this.admin = admin;
     }
 
     public static ObservableList<Usuario> getUsuarios() {
         String sql = """
                 SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono,
-                        COUNT(p.id) AS Pedidos
+                        COUNT(p.id) AS Pedidos, u.admin
                 FROM usuarios u
                     LEFT JOIN pedidos p ON u.id = p.id_usuario
                 where eliminado = false
@@ -71,7 +75,8 @@ public class Usuario {
                         resultado.getString(4),
                         resultado.getString(5),
                         resultado.getString(6),
-                        resultado.getInt(7)
+                        resultado.getInt(7),
+                        resultado.getBoolean(8)
                 );
                 usuarios.add(usuario);
             }

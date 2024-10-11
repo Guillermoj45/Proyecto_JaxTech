@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="321.0" prefWidth="611.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jaxtech.jaxtech.controlador.InicioSesion">
+   <children>
+      <TextField fx:id="textFiledUsuario" layoutX="252.0" layoutY="119.0" style="-fx-background-color: #53A548; -fx-text-fill: white;" />
+      <TextField fx:id="textFiledPassword" layoutX="252.0" layoutY="178.0" style="-fx-background-color: #53A548; -fx-text-fill: white;" />
+      <Label layoutX="210.0" layoutY="123.0" style="-fx-text-fill: white;" text="Usuario" />
+      <Label layoutX="190.0" layoutY="182.0" style="-fx-text-fill: white;" text="Contraseña" />
+      <Button layoutX="264.0" layoutY="245.0" mnemonicParsing="false" onAction="#iniciarSesion" style="-fx-background-color: #4C934C; -fx-text-fill: white;" text="Iniciar sesión" textAlignment="CENTER" />
+      <Text fill="WHITE" layoutX="209.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inicio de sesión">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

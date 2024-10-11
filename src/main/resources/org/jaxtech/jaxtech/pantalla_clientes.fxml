@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jaxtech.jaxtech.controlador.PantallaClientes">
+   <children>
+      <Text layoutX="209.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos ">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tablaProductos" layoutX="14.0" layoutY="117.0" prefHeight="200.0" prefWidth="570.0">
+        <columns>
+          <TableColumn fx:id="columTablaProductosImagene" prefWidth="135.99996948242188" text="Imagen" />
+          <TableColumn fx:id="columTablaProductosNombre" prefWidth="106.666748046875" text="Nombre" />
+            <TableColumn fx:id="columTablaProductosTipo" prefWidth="91.99993896484375" text="Tipo" />
+            <TableColumn fx:id="columTablaProductosStock" prefWidth="74.0" text="Stock" />
+            <TableColumn fx:id="columTablaProductosApto" prefWidth="157.33331298828125" text="Apto para gamin " />
+        </columns>
+      </TableView>
+      <Button layoutX="248.0" layoutY="341.0" mnemonicParsing="false" onAction="#agregar_producto" text="Añadir al Carrito" />
+      <ImageView fitHeight="53.0" fitWidth="55.0" layoutX="540.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/Carrito.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="536.0" layoutY="6.0" mnemonicParsing="false" onAction="#carrito" prefHeight="53.0" prefWidth="61.0" text="Button" visible="false" />
+   </children>
+</AnchorPane>

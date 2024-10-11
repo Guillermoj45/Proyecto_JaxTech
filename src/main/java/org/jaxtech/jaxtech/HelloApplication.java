@@ -12,11 +12,11 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/agregar_producto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/Inicio_sesion.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         new DDBB();
-        stage.setTitle("Hello!");
+        stage.setTitle("JaxTech");
         stage.setScene(scene);
         stage.show();
     }

@@ -82,6 +82,10 @@ public class AgregarProducto {
         imagenDefecto = productoImg.getImage();
     }
 
+    public void setScene(Scene scene){
+        ((Stage) scene.getWindow()).close();
+    }
+
     public void activarBotones(){
         buttEliminarUsuario.setDisable(false);
         buttModificarUsuario.setDisable(false);

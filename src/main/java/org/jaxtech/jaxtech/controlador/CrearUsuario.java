@@ -1,10 +1,7 @@
 package org.jaxtech.jaxtech.controlador;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.jaxtech.jaxtech.modelo.Usuario;
 
@@ -25,6 +22,8 @@ public class CrearUsuario {
     public TextField fidelTelefono;
     @FXML
     public TextField fidelPassword;
+    @FXML
+    public CheckBox checkAdmin;
 
     Usuario usuario;
     AgregarProducto agregarProducto;
@@ -63,12 +62,15 @@ public class CrearUsuario {
                 alert.showAndWait();
                 return;
             }
-            usuario = new Usuario(fidelNombre.getText(),
+            usuario = new Usuario(
+                    fidelNombre.getText(),
                     fidelApellido.getText(),
                     fidelDireccion.getText(),
                     choiceTipoPago.getValue(),
                     fidelTelefono.getText(), 0,
-                    fidelPassword.getText());
+                    fidelPassword.getText(),
+                    checkAdmin.isSelected()
+            );
             if (!usuario.insert())
                 usuario = null;
             agregarProducto.agregarUsuario(usuario);
