@@ -1,4 +1,5 @@
 package org.jaxtech.jaxtech.modelo;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
@@ -9,7 +10,7 @@ public class DDBB {
     String url, user, password;
     static Connection conexion;
 
-    public DDBB(){
+    public DDBB() {
         Dotenv dotenv = Dotenv.load();
         this.url = "jdbc:mysql://" + dotenv.get("URL");
         this.user = dotenv.get("USER");
@@ -17,7 +18,7 @@ public class DDBB {
         conexion = conexion();
     }
 
-    public static Connection getConexion(){
+    public static Connection getConexion() {
         try {
             if (conexion.isClosed())
                 new DDBB();
@@ -29,7 +30,7 @@ public class DDBB {
 
     }
 
-    public Connection conexion(){
+    public Connection conexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(url, user, password);

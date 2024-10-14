@@ -32,6 +32,7 @@ public class CrearUsuario {
         this.agregarProducto = agregarProducto;
         Arrays.stream(tiposPago).filter(tipo -> !tipo.equals("No filtros")).forEach(tipo -> choiceTipoPago.getItems().add(tipo));
     }
+
     public void inicio(AgregarProducto agregarProducto, String[] tiposPago, Usuario usuario) {
         this.agregarProducto = agregarProducto;
         choiceTipoPago.getItems().addAll(tiposPago);

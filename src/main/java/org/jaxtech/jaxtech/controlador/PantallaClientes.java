@@ -1,21 +1,24 @@
 package org.jaxtech.jaxtech.controlador;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.jaxtech.jaxtech.HelloApplication;
 import org.jaxtech.jaxtech.modelo.ImageTableCell;
 import org.jaxtech.jaxtech.modelo.Producto;
 import org.jaxtech.jaxtech.modelo.Usuario;
-import java.util.ArrayList;
+
+import java.io.IOException;
 
 public class PantallaClientes {
+    @FXML
+    public Button buttAñadir;
 
     @FXML
     private TableColumn<Producto, Boolean> columTablaProductosApto;
@@ -38,7 +41,7 @@ public class PantallaClientes {
     Usuario usuario;
     ObservableList<Producto> productos;
 
-    ArrayList<Producto> productosCarrito;
+    ObservableList<Producto> productosCarrito;
 
     @FXML
     public void initialize() {
@@ -51,7 +54,7 @@ public class PantallaClientes {
 
         productos = Producto.getProductos();
         tablaProductos.setItems(productos);
-        productosCarrito = new ArrayList<>();
+        productosCarrito = FXCollections.observableArrayList();
     }
 
     @FXML
@@ -60,7 +63,7 @@ public class PantallaClientes {
         if (producto != null) {
             int cantidad;
             try {
-                 cantidad = getCantidad();
+                cantidad = getCantidad();
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -69,7 +72,7 @@ public class PantallaClientes {
                 alert.showAndWait();
                 return;
             }
-            if (producto.getStock() >= cantidad){
+            if (producto.getStock() >= cantidad) {
                 producto.setStock(producto.getStock() - cantidad);
                 tablaProductos.refresh();
                 System.out.println("Producto: " + producto.getNombre() + " Cantidad: " + cantidad + "stock: " + producto.getStock());
@@ -81,28 +84,29 @@ public class PantallaClientes {
                 alert.showAndWait();
                 return;
             }
+            boolean encontrado = false;
 
-            boolean productoEnCarrito = false;
-            for (Producto p : productosCarrito) {
-                if (p.getId() == producto.getId()) {
-                    p.setStock(p.getStock() + cantidad);
-                    productoEnCarrito = true;
+            for (Producto productoCarrito : productosCarrito) {
+                if (productoCarrito.getId() == producto.getId()) {
+                    productoCarrito.setStock(productoCarrito.getStock() + cantidad);
+                    encontrado = true;
                     break;
                 }
             }
 
-            if (!productoEnCarrito) {
+            if (!encontrado) {
                 Producto productoCarrito = new Producto(producto);
                 productoCarrito.setStock(cantidad);
                 productosCarrito.add(productoCarrito);
             }
+
+
             if (producto.getStock() == 0) {
                 productos.remove(producto);
             }
-            productosCarrito.add(producto);
+
             System.out.println("Producto agregado al carrito: " + producto.getNombre());
         }
-
     }
 
     private int getCantidad() {
@@ -116,8 +120,22 @@ public class PantallaClientes {
     }
 
     @FXML
-    void carrito(ActionEvent event) {
-        System.out.println("Carrito");
+    void carrito() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/carritoClientes.fxml"));
+            Parent root = fxmlLoader.load();
+            CarritoClientes carritoClientes = fxmlLoader.getController();
+            carritoClientes.setProductos(productosCarrito);
+            carritoClientes.setUsuario(usuario);
+            Scene nuevaScena = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(nuevaScena);
+            stage.setTitle("Carrito");
+            stage.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setScene(Scene scene) {
@@ -127,5 +145,9 @@ public class PantallaClientes {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public void activarBoton() {
+        buttAñadir.setDisable(false);
     }
 }

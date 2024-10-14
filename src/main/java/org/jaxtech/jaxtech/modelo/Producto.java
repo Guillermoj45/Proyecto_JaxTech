@@ -14,11 +14,7 @@ import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
 
 public class Producto {
     private int id;
@@ -73,7 +69,10 @@ public class Producto {
 
 
         try {
-            PreparedStatement insert = conexion.prepareStatement("INSERT INTO productos (nombre, tipo, stock, precio, imagen, aptoParaGaming) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement insert = conexion.prepareStatement(
+                    "INSERT INTO productos (nombre, tipo, stock, precio, imagen, aptoParaGaming) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)"
+            );
             insert.setString(1, getNombre());
             insert.setString(2, getTipoPago());
             insert.setInt(3, getStock());
@@ -82,6 +81,7 @@ public class Producto {
             insert.setBoolean(6, isAptoGaming());
             insert.execute();
 
+            System.out.println("Producto insertado correctamente");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,7 +97,7 @@ public class Producto {
             PreparedStatement select = conexion.prepareStatement(sql);
             ResultSet resultado = select.executeQuery();
 
-            while (resultado.next()){
+            while (resultado.next()) {
                 int id = resultado.getInt("id");
                 String nombre = resultado.getString("nombre");
                 String tipo = resultado.getString("tipo");
@@ -110,19 +110,24 @@ public class Producto {
 
                 Producto producto = new Producto(id, nombre, tipo, stock, precio, imagen, aptoParaGaming);
                 productos.add(producto);
+
             }
+            System.out.println("Productos cargados correctamente");
             return productos;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void comprados(ArrayList<Producto> productos, Usuario usuario) {
+    public static void comprados(ObservableList<Producto> productos, Usuario usuario) {
         Connection conexion = DDBB.getConexion();
         try {
             conexion.setAutoCommit(false);
 
-            PreparedStatement insertPedidos = conexion.prepareStatement("insert into pedidos (id_usuario, fecha) values (?, now())");
+            PreparedStatement insertPedidos = conexion.prepareStatement(
+                    "insert into pedidos (id_usuario, fecha) values (?, now())",
+                    Statement.RETURN_GENERATED_KEYS
+            );
             insertPedidos.setInt(1, usuario.getId());
             insertPedidos.execute();
 
@@ -142,12 +147,12 @@ public class Producto {
                 insertMultipedidos.setInt(2, idPedido);
                 insertMultipedidos.setInt(3, producto.getStock());
                 insertMultipedidos.setFloat(4, producto.getPrecio());
-
+                update.execute();
+                insertMultipedidos.execute();
             }
-            update.execute();
-            insertMultipedidos.execute();
 
             conexion.commit();
+            System.out.println("Compra realizada correctamente");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -231,5 +236,9 @@ public class Producto {
 
     public ObservableValue<Boolean> aptoGamingProperty() {
         return new SimpleBooleanProperty(aptoGaming);
+    }
+
+    public SimpleIntegerProperty costeTotalProperty() {
+        return new SimpleIntegerProperty((int) (precio * stock));
     }
 }

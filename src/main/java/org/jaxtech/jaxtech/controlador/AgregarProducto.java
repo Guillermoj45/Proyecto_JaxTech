@@ -13,8 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-
 import org.jaxtech.jaxtech.modelo.DDBB;
 import org.jaxtech.jaxtech.modelo.Producto;
 import org.jaxtech.jaxtech.modelo.Usuario;
@@ -83,16 +81,16 @@ public class AgregarProducto {
         imagenDefecto = productoImg.getImage();
     }
 
-    public void setScene(Scene scene){
+    public void setScene(Scene scene) {
         ((Stage) scene.getWindow()).close();
     }
 
-    public void activarBotones(){
+    public void activarBotones() {
         buttEliminarUsuario.setDisable(false);
         buttModificarUsuario.setDisable(false);
     }
 
-    public void eliminarUsario(){
+    public void eliminarUsario() {
         Usuario usuario = tablaUsuarios.getSelectionModel().getSelectedItem();
         usuario.delete();
         usuarios.remove(usuario);
@@ -100,7 +98,7 @@ public class AgregarProducto {
             usuariosfiltrados.remove(usuario);
     }
 
-    public void crearUsuario(){
+    public void crearUsuario() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jaxtech/jaxtech/crear_usuario.fxml"));
             Parent root = loader.load();
@@ -112,14 +110,14 @@ public class AgregarProducto {
 
             CrearUsuario controller = loader.getController();
             AgregarProducto agregarProducto = this;
-            controller.inicio(agregarProducto,tiposPago);
+            controller.inicio(agregarProducto, tiposPago);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void modificarUsuario(){
+    public void modificarUsuario() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jaxtech/jaxtech/crear_usuario.fxml"));
             Parent root = loader.load();
@@ -131,7 +129,7 @@ public class AgregarProducto {
 
             CrearUsuario controller = loader.getController();
             AgregarProducto agregarProducto = this;
-            controller.inicio(agregarProducto,tiposPago,tablaUsuarios.getSelectionModel().getSelectedItem());
+            controller.inicio(agregarProducto, tiposPago, tablaUsuarios.getSelectionModel().getSelectedItem());
 
 
         } catch (IOException e) {
@@ -139,24 +137,24 @@ public class AgregarProducto {
         }
     }
 
-    public void agregarUsuario(Usuario usuario){
+    public void agregarUsuario(Usuario usuario) {
         usuarios.add(usuario);
         if (usuariosfiltrados != null)
             usuariosfiltrados.add(usuario);
     }
 
-    public void actualizarTabla(){
+    public void actualizarTabla() {
         tablaUsuarios.refresh();
     }
 
-    public void filtroUsuariosPorPago(){
+    public void filtroUsuariosPorPago() {
         String filtro = filtroPagoChoice.getValue();
         usuariosfiltrados = FXCollections.observableArrayList();
 
-        if(!filtro.equals("No filtros")){
+        if (!filtro.equals("No filtros")) {
             usuariosfiltrados.clear();
-            for(Usuario usuario : usuarios){
-                if(usuario.getTipoPago().equals(filtro)){
+            for (Usuario usuario : usuarios) {
+                if (usuario.getTipoPago().equals(filtro)) {
                     usuariosfiltrados.add(usuario);
                 }
             }
@@ -224,7 +222,7 @@ public class AgregarProducto {
         checkAptoGaming.setSelected(false);
     }
 
-    private void alerta (String titulo, String mensaje) {
+    private void alerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
         alert.setHeaderText(mensaje);

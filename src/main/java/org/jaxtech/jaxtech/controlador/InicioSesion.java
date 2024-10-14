@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import org.jaxtech.jaxtech.HelloApplication;
 import org.jaxtech.jaxtech.modelo.DDBB;
 import org.jaxtech.jaxtech.modelo.Usuario;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.sql.Connection;

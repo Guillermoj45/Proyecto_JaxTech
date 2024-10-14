@@ -128,7 +128,7 @@ public class Usuario {
     }
 
     public void update() {
-        if (this.password == null || this.password.isEmpty()){
+        if (this.password == null || this.password.isEmpty()) {
             String sql = "UPDATE usuarios SET nombre = ?, apellidos = ?, direccion = ?, pago = ?, telefono = ? WHERE id = ?";
             try (Connection conexion = DDBB.getConexion();
                  PreparedStatement update = conexion.prepareStatement(sql)) {
