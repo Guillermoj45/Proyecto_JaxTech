@@ -26,15 +26,15 @@ public class CrearUsuario {
     public CheckBox checkAdmin;
 
     Usuario usuario;
-    AgregarProducto agregarProducto;
+    PantallaAdmin pantallaAdmin;
 
-    public void inicio(AgregarProducto agregarProducto, String[] tiposPago) {
-        this.agregarProducto = agregarProducto;
+    public void inicio(PantallaAdmin pantallaAdmin, String[] tiposPago) {
+        this.pantallaAdmin = pantallaAdmin;
         Arrays.stream(tiposPago).filter(tipo -> !tipo.equals("No filtros")).forEach(tipo -> choiceTipoPago.getItems().add(tipo));
     }
 
-    public void inicio(AgregarProducto agregarProducto, String[] tiposPago, Usuario usuario) {
-        this.agregarProducto = agregarProducto;
+    public void inicio(PantallaAdmin pantallaAdmin, String[] tiposPago, Usuario usuario) {
+        this.pantallaAdmin = pantallaAdmin;
         choiceTipoPago.getItems().addAll(tiposPago);
         fidelNombre.setText(usuario.getNombre());
         fidelApellido.setText(usuario.getApellidos());
@@ -74,7 +74,7 @@ public class CrearUsuario {
             );
             if (!usuario.insert())
                 usuario = null;
-            agregarProducto.agregarUsuario(usuario);
+            pantallaAdmin.agregarUsuario(usuario);
         } else {
             if (!fidelPassword.getText().isEmpty())
                 usuario.setPassword(fidelPassword.getText());
@@ -85,7 +85,7 @@ public class CrearUsuario {
             usuario.setTipoPago(choiceTipoPago.getValue());
             usuario.update();
         }
-        agregarProducto.actualizarTabla();
+        pantallaAdmin.actualizarTabla();
 
         Stage stage = (Stage) fidelNombre.getScene().getWindow();
         stage.close();

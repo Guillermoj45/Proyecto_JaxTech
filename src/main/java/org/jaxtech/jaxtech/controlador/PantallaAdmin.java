@@ -3,10 +3,15 @@ package org.jaxtech.jaxtech.controlador;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,7 +25,7 @@ import org.jaxtech.jaxtech.modelo.Usuario;
 import java.io.File;
 import java.io.IOException;
 
-public class AgregarProducto {
+public class PantallaAdmin {
 
     @FXML
     public TextField nombreTextFiled;
@@ -56,6 +61,10 @@ public class AgregarProducto {
     public ChoiceBox<String> filtroPagoChoice;
     @FXML
     public CheckBox checkAptoGaming;
+    public AreaChart<String, Integer> Grafica;
+    public CategoryAxis categoriaY;
+    public NumberAxis numerosX;
+
     private ObservableList<Usuario> usuarios, usuariosfiltrados;
     public String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
 
@@ -79,6 +88,22 @@ public class AgregarProducto {
         columnTotalPedidos.setCellValueFactory(cellData -> cellData.getValue().totalPedidosProperty().asObject());
 
         imagenDefecto = productoImg.getImage();
+
+        // Grafica
+        Grafica.getData().add(new XYChart.Series<>("Ventas", FXCollections.observableArrayList(
+                new XYChart.Data<>("Enero", 100),
+                new XYChart.Data<>("Febrero", 200),
+                new XYChart.Data("Marzo", 300),
+                new XYChart.Data("Abril", 400),
+                new XYChart.Data("Mayo", 500),
+                new XYChart.Data("Junio", 600),
+                new XYChart.Data("Julio", 700),
+                new XYChart.Data("Agosto", 800),
+                new XYChart.Data("Septiembre", 900),
+                new XYChart.Data("Octubre", 1000),
+                new XYChart.Data("Noviembre", 1100),
+                new XYChart.Data("Diciembre", 1200)
+        )));
     }
 
     public void setScene(Scene scene) {
@@ -109,8 +134,8 @@ public class AgregarProducto {
             stage.show();
 
             CrearUsuario controller = loader.getController();
-            AgregarProducto agregarProducto = this;
-            controller.inicio(agregarProducto, tiposPago);
+            PantallaAdmin pantallaAdmin = this;
+            controller.inicio(pantallaAdmin, tiposPago);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -128,8 +153,8 @@ public class AgregarProducto {
             stage.show();
 
             CrearUsuario controller = loader.getController();
-            AgregarProducto agregarProducto = this;
-            controller.inicio(agregarProducto, tiposPago, tablaUsuarios.getSelectionModel().getSelectedItem());
+            PantallaAdmin pantallaAdmin = this;
+            controller.inicio(pantallaAdmin, tiposPago, tablaUsuarios.getSelectionModel().getSelectedItem());
 
 
         } catch (IOException e) {

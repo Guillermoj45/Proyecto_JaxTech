@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="467.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jaxtech.jaxtech.controlador.AgregarProducto">
+<AnchorPane prefHeight="467.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jaxtech.jaxtech.controlador.PantallaAdmin">
     <TabPane prefHeight="467.0" prefWidth="737.0" style="--navbar-background-color: black" tabClosingPolicy="UNAVAILABLE">
         <Tab style="-fx-background-color: #4C934C;" text="Agregar producto">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="552.0" style="-fx-background-color: #1A181B;">
@@ -64,14 +64,19 @@
             </AnchorPane>
         </Tab>
         <Tab style="-fx-background-color: #4C934C;" text="Analisis">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #53A548;">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #1A181B;">
             <children>
-               <AreaChart layoutX="21.0" layoutY="130.0" prefHeight="294.0" prefWidth="361.0">
+               <Label layoutX="230.0" layoutY="26.0" text="Resumen de las compras" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="24.0" />
+                  </font>
+               </Label>
+               <AreaChart fx:id="Grafica" layoutX="28.0" layoutY="90.0" prefHeight="294.0" prefWidth="679.0">
                  <xAxis>
-                   <CategoryAxis side="BOTTOM" />
+                   <CategoryAxis fx:id="categoriaY" side="BOTTOM" />
                  </xAxis>
                  <yAxis>
-                   <NumberAxis side="LEFT" />
+                   <NumberAxis fx:id="numerosX" prefHeight="253.0" prefWidth="31.0" side="LEFT" />
                  </yAxis>
                </AreaChart>
             </children></AnchorPane>

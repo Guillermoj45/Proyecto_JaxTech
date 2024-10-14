@@ -95,15 +95,15 @@ public class InicioSesion {
 
 
     private void cargarPantallaAdministrador(Scene scene) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/agregar_producto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/PantallaAdmin.fxml"));
         Parent root = fxmlLoader.load();
         Scene nuevaScena = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(nuevaScena);
         stage.setTitle("Administrador");
         stage.show();
-        AgregarProducto agregarProducto = fxmlLoader.getController();
-        agregarProducto.setScene(scene);
+        PantallaAdmin pantallaAdmin = fxmlLoader.getController();
+        pantallaAdmin.setScene(scene);
     }
 
 
