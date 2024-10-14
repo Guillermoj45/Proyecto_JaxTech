@@ -56,6 +56,7 @@ public class AgregarProducto {
     public Button buttModificarUsuario, buttCrearUsuario, buttEliminarUsuario;
     @FXML
     public ChoiceBox<String> filtroPagoChoice;
+    @FXML
     public CheckBox checkAptoGaming;
     private ObservableList<Usuario> usuarios, usuariosfiltrados;
     public String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};

@@ -21,10 +21,12 @@ public class DDBB {
         try {
             if (conexion.isClosed())
                 new DDBB();
+            conexion.setAutoCommit(true);
+            return conexion;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return conexion;
+
     }
 
     public Connection conexion(){

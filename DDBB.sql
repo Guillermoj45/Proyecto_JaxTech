@@ -35,22 +35,31 @@ explain extended SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.tele
 
 drop table pedidos;
 
+create table multipedidos (
+    id bigint unsigned primary key auto_increment,
+    id_producto int unsigned,
+    id_pedido bigint unsigned,
+    cantidad int not null,
+    precio decimal(10,2),
+
+    constraint foreign_productos
+        foreign key (id_producto)
+            references productos(id)
+                    on update cascade on delete set null,
+    constraint foreign_pedidos
+        foreign key (id_pedido)
+            references pedidos(id)
+                    on update cascade on delete set null
+);
+
 create or replace table pedidos (
     id bigint unsigned primary key auto_increment,
     id_usuario int unsigned,
-    id_producto int unsigned,
     fecha date not null,
-    cantidad int not null,
-    precio decimal(10,2),
-    total decimal(10,2) generated always as (precio * cantidad) virtual,
 
     constraint foreign_usuarios
         foreign key (id_usuario)
             references usuarios(id)
-                    on update cascade on DELETE set null,
-    constraint foreign_productos
-        foreign key (id_producto)
-            references productos(id)
                     on update cascade on DELETE set null
 );
 

@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Producto {
     private int id;
@@ -27,6 +28,16 @@ public class Producto {
     private float precio;
     private Image imagen;
     private Boolean aptoGaming;
+
+    public Producto(Producto producto) {
+        this.id = producto.id;
+        this.nombre = producto.nombre;
+        this.tipoPago = producto.tipoPago;
+        this.stock = producto.stock;
+        this.precio = producto.precio;
+        this.imagen = producto.imagen;
+        this.aptoGaming = producto.aptoGaming;
+    }
 
     public Producto(int id, String nombre, String tipoPago, int stock, float precio, Image imagen, boolean aptoGaming) {
         this.id = id;
@@ -104,6 +115,44 @@ public class Producto {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void comprados(ArrayList<Producto> productos, Usuario usuario) {
+        Connection conexion = DDBB.getConexion();
+        try {
+            conexion.setAutoCommit(false);
+
+            PreparedStatement insertPedidos = conexion.prepareStatement("insert into pedidos (id_usuario, fecha) values (?, now())");
+            insertPedidos.setInt(1, usuario.getId());
+            insertPedidos.execute();
+
+            ResultSet resultado = insertPedidos.getGeneratedKeys();
+            resultado.next();
+            int idPedido = resultado.getInt(1);
+
+            PreparedStatement update = conexion.prepareStatement("UPDATE productos SET stock = stock - ? WHERE id = ?");
+
+            PreparedStatement insertMultipedidos = conexion.prepareStatement("insert into multipedidos (id_producto, id_pedido, cantidad, precio) values (?, ?, ?, ?)");
+
+            for (Producto producto : productos) {
+                update.setInt(1, producto.getStock());
+                update.setInt(2, producto.getId());
+
+                insertMultipedidos.setInt(1, producto.getId());
+                insertMultipedidos.setInt(2, idPedido);
+                insertMultipedidos.setInt(3, producto.getStock());
+                insertMultipedidos.setFloat(4, producto.getPrecio());
+
+            }
+            update.execute();
+            insertMultipedidos.execute();
+
+            conexion.commit();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public int getId() {

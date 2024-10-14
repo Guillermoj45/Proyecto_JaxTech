@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.jaxtech.jaxtech.HelloApplication;
 import org.jaxtech.jaxtech.modelo.DDBB;
+import org.jaxtech.jaxtech.modelo.Usuario;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -28,7 +30,7 @@ public class InicioSesion {
     @FXML
     void iniciarSesion(ActionEvent event) {
         int id;
-        boolean admin = false;
+        boolean admin;
         if (textFiledUsuario.getText().isEmpty() || textFiledPassword.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -37,7 +39,8 @@ public class InicioSesion {
             alert.showAndWait();
         } else {
             Connection conexion = DDBB.getConexion();
-            String sql = "SELECT id, admin FROM usuarios WHERE nombre = ? AND password = password(?) limit 1";
+            String sql = "SELECT id, nombre, apellidos, direccion, pago, telefono, admin FROM usuarios WHERE nombre = ? AND password = password(?) limit 1";
+            Usuario usuario;
             try {
                 PreparedStatement select = conexion.prepareStatement(sql);
                 select.setString(1, textFiledUsuario.getText());
@@ -47,44 +50,62 @@ public class InicioSesion {
                 if (resultado.next()) {
                     id = resultado.getInt("id");
                     admin = resultado.getBoolean("admin");
+                    String nombreUsuario = resultado.getString("nombre");
+                    String apellidos = resultado.getString("apellidos");
+                    String direccion = resultado.getString("direccion");
+                    String pago = resultado.getString("pago");
+                    String telefono = resultado.getString("telefono");
+
+                    usuario = new Usuario(id, nombreUsuario, apellidos, direccion, pago, telefono, admin);
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Usuario o contraseña incorrectos");
                     alert.setContentText("Por favor, revise los datos introducidos");
                     alert.showAndWait();
-                }
-                Scene scene = textFiledUsuario.getScene();
-                if (admin) {
-
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/agregar_producto.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Scene nuevaScena = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setScene(nuevaScena);
-                    stage.setTitle("Administrador");
-                    stage.show();
-
-
-                    AgregarProducto agregarProducto = fxmlLoader.getController();
-                    agregarProducto.setScene(scene);
-                } else {
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/pantalla_clientes.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Scene nuevaScena = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setScene(nuevaScena);
-                    PantallaClientes pantallaClientes = fxmlLoader.getController();
-                    pantallaClientes.setScene(scene);
-                    stage.setTitle("Cliente");
-                    stage.show();
+                    return;
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            }
+            try {
+                Scene scene = textFiledUsuario.getScene();
+                if (usuario.isAdmin()) {
+                    cargarPantallaAdministrador(scene);
+                } else {
+                    cargarPantallaUsuario(usuario, scene);
+                }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
+
+    private void cargarPantallaUsuario(Usuario usuario, Scene scene) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/pantalla_clientes.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene nuevaScena = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(nuevaScena);
+        PantallaClientes pantallaClientes = fxmlLoader.getController();
+        pantallaClientes.setUsuario(usuario);
+        pantallaClientes.setScene(scene);
+        stage.setTitle("Cliente");
+        stage.show();
+    }
+
+
+    private void cargarPantallaAdministrador(Scene scene) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/agregar_producto.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene nuevaScena = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(nuevaScena);
+        stage.setTitle("Administrador");
+        stage.show();
+        AgregarProducto agregarProducto = fxmlLoader.getController();
+        agregarProducto.setScene(scene);
+    }
+
 
 }

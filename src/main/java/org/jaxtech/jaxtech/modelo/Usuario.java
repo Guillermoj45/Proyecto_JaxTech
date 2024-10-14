@@ -54,6 +54,16 @@ public class Usuario {
         this.admin = admin;
     }
 
+    public Usuario(int id, String nombreUsuario, String apellidos, String direccion, String pago, String telefono, boolean admin) {
+        this.id = id;
+        this.nombre = nombreUsuario;
+        this.apellidos = apellidos;
+        this.direccion = direccion;
+        this.tipoPago = pago;
+        this.numTelefono = telefono;
+        this.admin = admin;
+    }
+
     public static ObservableList<Usuario> getUsuarios() {
         String sql = """
                 SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono,
@@ -235,6 +245,14 @@ public class Usuario {
 
     public void setTotalPedidos(int totalPedidos) {
         this.totalPedidos = totalPedidos;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public SimpleIntegerProperty idProperty() {
