@@ -52,7 +52,7 @@ public class PantallaClientes {
 
     @FXML
     void carrito(ActionEvent event) {
-
+        System.out.println("Carrito");
     }
 
     public void setScene(Scene scene) {
