@@ -71,7 +71,7 @@
                      <Font name="System Bold" size="24.0" />
                   </font>
                </Label>
-               <AreaChart fx:id="Grafica" layoutX="28.0" layoutY="90.0" prefHeight="294.0" prefWidth="679.0">
+               <AreaChart fx:id="grafica" layoutX="28.0" layoutY="90.0" prefHeight="294.0" prefWidth="679.0">
                  <xAxis>
                    <CategoryAxis fx:id="categoriaY" side="BOTTOM" />
                  </xAxis>

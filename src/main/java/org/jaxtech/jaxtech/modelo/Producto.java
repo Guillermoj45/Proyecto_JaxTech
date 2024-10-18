@@ -110,7 +110,6 @@ public class Producto {
 
                 Producto producto = new Producto(id, nombre, tipo, stock, precio, imagen, aptoParaGaming);
                 productos.add(producto);
-
             }
             System.out.println("Productos cargados correctamente");
             return productos;

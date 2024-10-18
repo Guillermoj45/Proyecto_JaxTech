@@ -3,7 +3,6 @@ package org.jaxtech.jaxtech.controlador;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,11 +18,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jaxtech.jaxtech.modelo.DDBB;
+import org.jaxtech.jaxtech.modelo.Grafica;
 import org.jaxtech.jaxtech.modelo.Producto;
 import org.jaxtech.jaxtech.modelo.Usuario;
 
 import java.io.File;
 import java.io.IOException;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 public class PantallaAdmin {
 
@@ -61,7 +63,7 @@ public class PantallaAdmin {
     public ChoiceBox<String> filtroPagoChoice;
     @FXML
     public CheckBox checkAptoGaming;
-    public AreaChart<String, Integer> Grafica;
+    public AreaChart<String, Double> grafica;
     public CategoryAxis categoriaY;
     public NumberAxis numerosX;
 
@@ -89,21 +91,44 @@ public class PantallaAdmin {
 
         imagenDefecto = productoImg.getImage();
 
-        // Grafica
-        Grafica.getData().add(new XYChart.Series<>("Ventas", FXCollections.observableArrayList(
-                new XYChart.Data<>("Enero", 100),
-                new XYChart.Data<>("Febrero", 200),
-                new XYChart.Data("Marzo", 300),
-                new XYChart.Data("Abril", 400),
-                new XYChart.Data("Mayo", 500),
-                new XYChart.Data("Junio", 600),
-                new XYChart.Data("Julio", 700),
-                new XYChart.Data("Agosto", 800),
-                new XYChart.Data("Septiembre", 900),
-                new XYChart.Data("Octubre", 1000),
-                new XYChart.Data("Noviembre", 1100),
-                new XYChart.Data("Diciembre", 1200)
-        )));
+
+
+        ObservableList<XYChart.Data<String, Double>> datosVentasAnuales = Grafica.cantidadComprasAnuales();
+        ObservableList<XYChart.Data<String, Double>> cantidadTotalAnual = Grafica.cantidadDeProductosComprados();
+        ObservableList<XYChart.Data<String, Double>> gananciasAnuales = Grafica.gananciasAnuales();
+
+
+        // Crear serie y agregar lista de datos
+        XYChart.Series<String, Double> serieVentas = new XYChart.Series<>("Ventas anuales", datosVentasAnuales);
+        XYChart.Series<String, Double> serieVentas1 = new XYChart.Series<>("Catidad de productos comprados", cantidadTotalAnual);
+        XYChart.Series<String, Double> serieVentas2 = new XYChart.Series<>("Ganancias anuales", gananciasAnuales);
+
+        // Agregar serie al gráfico
+        grafica.getData().add(serieVentas);
+        grafica.getData().add(serieVentas1);
+        grafica.getData().add(serieVentas2);
+    }
+
+    public ObservableList<XYChart.Data<String, Integer>> recuperar_datos (){
+        // Crear datos individuales
+        XYChart.Data<String, Integer> enero = new XYChart.Data<>("Enero", 100);
+        XYChart.Data<String, Integer> febrero = new XYChart.Data<>("Febrero", 200);
+        XYChart.Data<String, Integer> marzo = new XYChart.Data<>("Marzo", 300);
+        XYChart.Data<String, Integer> abril = new XYChart.Data<>("Abril", 400);
+        XYChart.Data<String, Integer> mayo = new XYChart.Data<>("Mayo", 500);
+        XYChart.Data<String, Integer> junio = new XYChart.Data<>("Junio", 600);
+        XYChart.Data<String, Integer> julio = new XYChart.Data<>("Julio", 700);
+        XYChart.Data<String, Integer> agosto = new XYChart.Data<>("Agosto", 800);
+        XYChart.Data<String, Integer> septiembre = new XYChart.Data<>("Septiembre", 900);
+        XYChart.Data<String, Integer> octubre = new XYChart.Data<>("Octubre", 1000);
+        XYChart.Data<String, Integer> noviembre = new XYChart.Data<>("Noviembre", 1100);
+        XYChart.Data<String, Integer> diciembre = new XYChart.Data<>("Diciembre", 1200);
+
+        // Crear lista observable y agregar datos
+        ObservableList<XYChart.Data<String, Integer>> datosVentas = FXCollections.observableArrayList(
+                enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre
+        );
+        return datosVentas;
     }
 
     public void setScene(Scene scene) {
@@ -174,7 +199,7 @@ public class PantallaAdmin {
 
     public void filtroUsuariosPorPago() {
         String filtro = filtroPagoChoice.getValue();
-        usuariosfiltrados = FXCollections.observableArrayList();
+        usuariosfiltrados = observableArrayList();
 
         if (!filtro.equals("No filtros")) {
             usuariosfiltrados.clear();
