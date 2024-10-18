@@ -15,6 +15,7 @@ module org.jaxtech.jaxtech {
     requires mysql.connector.j;
     requires javafx.swing;
     requires annotations;
+    requires static lombok;
 
     opens org.jaxtech.jaxtech to javafx.fxml;
     exports org.jaxtech.jaxtech;

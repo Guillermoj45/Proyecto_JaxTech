@@ -1,14 +1,36 @@
 package org.jaxtech.jaxtech.modelo;
 
+import javafx.beans.binding.DoubleExpression;
+import javafx.beans.binding.IntegerExpression;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Grafica {
+@Getter
+@Setter
+public class DatosAnalisis {
+    private String nombre;
+    private Integer nVentas;
+    private Integer uVendidas;
+    private Double ganancias;
+
+    public DatosAnalisis(String nombre, Integer nVentas, Integer uVendidas, Double ganancias) {
+        this.nombre = nombre;
+        this.nVentas = nVentas;
+        this.uVendidas = uVendidas;
+        this.ganancias = ganancias;
+    }
+    
     public static ObservableList<XYChart.Data<String, Double>> cantidadComprasAnuales() {
         String sql = """
                 SELECT
@@ -112,5 +134,56 @@ public class Grafica {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    static public ObservableList<DatosAnalisis> datosTabla() {
+        ObservableList<DatosAnalisis> lista = FXCollections.observableArrayList();
+        String sql = """
+                SELECT
+                    p.nombre,
+                    COUNT(p.id) AS nVentas,
+                    SUM(m.cantidad) AS uVendidas,
+                    SUM(m.cantidad * m.precio) AS ganancias
+                FROM
+                    productos p
+                        LEFT JOIN
+                    multipedidos m ON p.id = m.id_producto
+                GROUP BY
+                    p.id
+                ORDER BY
+                    nVentas DESC
+                    LIMIT 5;
+                """;
+        Connection conexion = DDBB.getConexion();
+        try {
+            ResultSet resultado = conexion.prepareStatement(sql).executeQuery();
+            while (resultado.next()) {
+                String nombre = resultado.getString("nombre");
+                Integer nVentas = resultado.getInt("nVentas");
+                Integer uVendidas = resultado.getInt("uVendidas");
+                Double ganancias = resultado.getDouble("ganancias");
+                DatosAnalisis datos = new DatosAnalisis(nombre, nVentas, uVendidas, ganancias);
+                lista.add(datos);
+            }
+            return lista;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ObservableValue<String> nombreProperty() {
+        return new SimpleStringProperty(nombre);
+    }
+
+    public IntegerExpression nVentasProperty() {
+        return new SimpleIntegerProperty(nVentas);
+    }
+
+    public IntegerExpression uVendidasProperty() {
+        return new SimpleIntegerProperty(uVendidas);
+    }
+
+    public DoubleExpression gananciasProperty() {
+        return new SimpleDoubleProperty(ganancias);
     }
 }

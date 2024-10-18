@@ -3,7 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/DDBB.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/jaxtech/jaxtech/controlador/InicioSesion.java" dialect="MariaDB" />
-    <file url="file://$PROJECT_DIR$/src/main/java/org/jaxtech/jaxtech/modelo/Grafica.java" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/jaxtech/jaxtech/modelo/DatosAnalisis.java" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/jaxtech/jaxtech/modelo/Producto.java" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/jaxtech/jaxtech/modelo/Usuario.java" dialect="MariaDB" />
   </component>

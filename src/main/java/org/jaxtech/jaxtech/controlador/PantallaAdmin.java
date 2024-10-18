@@ -8,8 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -18,7 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jaxtech.jaxtech.modelo.DDBB;
-import org.jaxtech.jaxtech.modelo.Grafica;
+import org.jaxtech.jaxtech.modelo.DatosAnalisis;
 import org.jaxtech.jaxtech.modelo.Producto;
 import org.jaxtech.jaxtech.modelo.Usuario;
 
@@ -63,9 +61,13 @@ public class PantallaAdmin {
     public ChoiceBox<String> filtroPagoChoice;
     @FXML
     public CheckBox checkAptoGaming;
-    public AreaChart<String, Double> grafica;
-    public CategoryAxis categoriaY;
-    public NumberAxis numerosX;
+    @FXML
+    public AreaChart<String, Double> productosComprados, cantidadDeVentas, dineroGenerado;
+    public TableView tablaMasVendido;
+    public TableColumn<DatosAnalisis,String> columTablaMasVendidoNombre;
+    public TableColumn<DatosAnalisis,Integer> columTablaMasVendidoNVentas,columTablaMasVendidoUVendidas;
+    public TableColumn<DatosAnalisis, Double> columTablaMasVendidoGanancias;
+
 
     private ObservableList<Usuario> usuarios, usuariosfiltrados;
     public String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
@@ -91,22 +93,27 @@ public class PantallaAdmin {
 
         imagenDefecto = productoImg.getImage();
 
+        columTablaMasVendidoNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        columTablaMasVendidoNVentas.setCellValueFactory(cellData -> cellData.getValue().nVentasProperty().asObject());
+        columTablaMasVendidoUVendidas.setCellValueFactory(cellData -> cellData.getValue().uVendidasProperty().asObject());
+        columTablaMasVendidoGanancias.setCellValueFactory(cellData -> cellData.getValue().gananciasProperty().asObject());
+        tablaMasVendido.setItems(DatosAnalisis.datosTabla());
 
 
-        ObservableList<XYChart.Data<String, Double>> datosVentasAnuales = Grafica.cantidadComprasAnuales();
-        ObservableList<XYChart.Data<String, Double>> cantidadTotalAnual = Grafica.cantidadDeProductosComprados();
-        ObservableList<XYChart.Data<String, Double>> gananciasAnuales = Grafica.gananciasAnuales();
+        ObservableList<XYChart.Data<String, Double>> datosVentasAnuales = DatosAnalisis.cantidadComprasAnuales();
+        ObservableList<XYChart.Data<String, Double>> cantidadTotalAnual = DatosAnalisis.cantidadDeProductosComprados();
+        ObservableList<XYChart.Data<String, Double>> gananciasAnuales = DatosAnalisis.gananciasAnuales();
 
 
         // Crear serie y agregar lista de datos
-        XYChart.Series<String, Double> serieVentas = new XYChart.Series<>("Ventas anuales", datosVentasAnuales);
-        XYChart.Series<String, Double> serieVentas1 = new XYChart.Series<>("Catidad de productos comprados", cantidadTotalAnual);
-        XYChart.Series<String, Double> serieVentas2 = new XYChart.Series<>("Ganancias anuales", gananciasAnuales);
+        XYChart.Series<String, Double> serieVentasAnulaes = new XYChart.Series<>("Ventas anuales", datosVentasAnuales);
+        XYChart.Series<String, Double> cantidadDeCompraAnual = new XYChart.Series<>("Catidad de productos comprados", cantidadTotalAnual);
+        XYChart.Series<String, Double> ganaciasAnuales = new XYChart.Series<>("Ganancias anuales", gananciasAnuales);
 
         // Agregar serie al gráfico
-        grafica.getData().add(serieVentas);
-        grafica.getData().add(serieVentas1);
-        grafica.getData().add(serieVentas2);
+        productosComprados.getData().add(serieVentasAnulaes);
+        cantidadDeVentas.getData().add(cantidadDeCompraAnual);
+        dineroGenerado.getData().add(ganaciasAnuales);
     }
 
     public ObservableList<XYChart.Data<String, Integer>> recuperar_datos (){

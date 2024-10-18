@@ -3,12 +3,16 @@ package org.jaxtech.jaxtech.modelo;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Getter
+@Setter
 public class Usuario {
     Integer id;
     String nombre;
@@ -173,86 +177,6 @@ public class Usuario {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setTotalPedidos(Integer totalPedidos) {
-        this.totalPedidos = totalPedidos;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getTipoPago() {
-        return tipoPago;
-    }
-
-    public void setTipoPago(String tipoPago) {
-        this.tipoPago = tipoPago;
-    }
-
-    public String getNumTelefono() {
-        return numTelefono;
-    }
-
-    public void setNumTelefono(String numTelefono) {
-        this.numTelefono = numTelefono;
-    }
-
-    public int getTotalPedidos() {
-        return totalPedidos;
-    }
-
-    public void setTotalPedidos(int totalPedidos) {
-        this.totalPedidos = totalPedidos;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
     }
 
     public SimpleIntegerProperty idProperty() {

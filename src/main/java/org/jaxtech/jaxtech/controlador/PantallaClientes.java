@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.Setter;
 import org.jaxtech.jaxtech.HelloApplication;
 import org.jaxtech.jaxtech.modelo.ImageTableCell;
 import org.jaxtech.jaxtech.modelo.Producto;
@@ -38,6 +39,7 @@ public class PantallaClientes {
     @FXML
     private TableView<Producto> tablaProductos;
 
+    @Setter
     Usuario usuario;
     ObservableList<Producto> productos;
 
@@ -64,6 +66,9 @@ public class PantallaClientes {
             int cantidad;
             try {
                 cantidad = getCantidad();
+                if (cantidad <= 0) {
+                    return;
+                }
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -141,10 +146,6 @@ public class PantallaClientes {
     public void setScene(Scene scene) {
         // Cerramos la ventana
         ((Stage) scene.getWindow()).close();
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public void activarBoton() {

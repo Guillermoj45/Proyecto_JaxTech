@@ -71,14 +71,58 @@
                      <Font name="System Bold" size="24.0" />
                   </font>
                </Label>
-               <AreaChart fx:id="grafica" layoutX="28.0" layoutY="90.0" prefHeight="294.0" prefWidth="679.0">
+               <AreaChart fx:id="productosComprados" layoutX="28.0" layoutY="90.0" prefHeight="161.0" prefWidth="305.0">
                  <xAxis>
-                   <CategoryAxis fx:id="categoriaY" side="BOTTOM" />
+                   <CategoryAxis side="BOTTOM" />
                  </xAxis>
                  <yAxis>
-                   <NumberAxis fx:id="numerosX" prefHeight="253.0" prefWidth="31.0" side="LEFT" />
+                   <NumberAxis prefHeight="253.0" prefWidth="31.0" side="LEFT" />
                  </yAxis>
                </AreaChart>
+               <Label layoutX="74.0" layoutY="70.0" text="Productos comprados anualmente" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <AreaChart fx:id="cantidadDeVentas" layoutX="395.0" layoutY="90.0" prefHeight="161.0" prefWidth="309.0">
+                  <xAxis>
+                     <CategoryAxis side="BOTTOM" />
+                  </xAxis>
+                  <yAxis>
+                     <NumberAxis prefHeight="253.0" prefWidth="31.0" side="LEFT" />
+                  </yAxis>
+               </AreaChart>
+               <Label layoutX="508.0" layoutY="70.0" text="Cantidad de ventas" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <AreaChart fx:id="dineroGenerado" layoutX="392.0" layoutY="263.0" prefHeight="161.0" prefWidth="312.0">
+                  <xAxis>
+                     <CategoryAxis side="BOTTOM" />
+                  </xAxis>
+                  <yAxis>
+                     <NumberAxis prefHeight="253.0" prefWidth="31.0" side="LEFT" />
+                  </yAxis>
+               </AreaChart>
+               <Label layoutX="515.0" layoutY="243.0" text="Dinero generado" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="107.0" layoutY="243.0" text="Cinco productos más vendidios" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <TableView fx:id="tablaMasVendido" layoutX="28.0" layoutY="270.0" prefHeight="148.0" prefWidth="346.0">
+                 <columns>
+                   <TableColumn fx:id="columTablaMasVendidoNombre" prefWidth="81.0" text="Nombre" />
+                   <TableColumn fx:id="columTablaMasVendidoNVentas" prefWidth="75.0" text="Nº ventas" />
+                     <TableColumn fx:id="columTablaMasVendidoUVendidas" prefWidth="113.0" text="Unidades vendidas" />
+                     <TableColumn fx:id="columTablaMasVendidoGanancias" prefWidth="75.0" text="Ganancias" />
+                 </columns>
+               </TableView>
             </children></AnchorPane>
         </Tab>
     </TabPane>

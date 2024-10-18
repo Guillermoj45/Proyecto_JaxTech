@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Inicio" type="Application" factoryName="Application">
+  <configuration default="false" name="Inicio" type="Application" factoryName="Application" singleton="false">
     <option name="MAIN_CLASS_NAME" value="org.jaxtech.jaxtech.HelloApplication" />
     <module name="JaxTech" />
     <method v="2">
