@@ -70,13 +70,13 @@ public class Usuario {
 
     public static ObservableList<Usuario> getUsuarios() {
         String sql = """
-                SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono,
-                        COUNT(p.id) AS Pedidos, u.admin
-                FROM usuarios u
-                    LEFT JOIN pedidos p ON u.id = p.id_usuario
-                where eliminado = false
-                GROUP BY u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono;
-""";
+                                SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono,
+                                        COUNT(p.id) AS Pedidos, u.admin
+                                FROM usuarios u
+                                    LEFT JOIN pedidos p ON u.id = p.id_usuario
+                                where eliminado = false
+                                GROUP BY u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono;
+                """;
         try (Connection conexion = DDBB.getConexion();
              PreparedStatement select = conexion.prepareStatement(sql);
              ResultSet resultado = select.executeQuery()) {

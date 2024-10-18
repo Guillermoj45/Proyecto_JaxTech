@@ -75,7 +75,7 @@ public class Producto {
         try {
             PreparedStatement insert = conexion.prepareStatement(
                     "INSERT INTO productos (nombre, tipo, stock, precio, imagen, aptoParaGaming) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)"
+                            "VALUES (?, ?, ?, ?, ?, ?)"
             );
             insert.setString(1, getNombre());
             insert.setString(2, getTipoPago());

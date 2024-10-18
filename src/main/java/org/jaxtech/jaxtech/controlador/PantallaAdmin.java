@@ -1,7 +1,6 @@
 package org.jaxtech.jaxtech.controlador;
 
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,9 +62,9 @@ public class PantallaAdmin {
     public CheckBox checkAptoGaming;
     @FXML
     public AreaChart<String, Double> productosComprados, cantidadDeVentas, dineroGenerado;
-    public TableView tablaMasVendido;
-    public TableColumn<DatosAnalisis,String> columTablaMasVendidoNombre;
-    public TableColumn<DatosAnalisis,Integer> columTablaMasVendidoNVentas,columTablaMasVendidoUVendidas;
+    public TableView<DatosAnalisis> tablaMasVendido;
+    public TableColumn<DatosAnalisis, String> columTablaMasVendidoNombre;
+    public TableColumn<DatosAnalisis, Integer> columTablaMasVendidoNVentas, columTablaMasVendidoUVendidas;
     public TableColumn<DatosAnalisis, Double> columTablaMasVendidoGanancias;
 
 
@@ -114,28 +113,6 @@ public class PantallaAdmin {
         productosComprados.getData().add(serieVentasAnulaes);
         cantidadDeVentas.getData().add(cantidadDeCompraAnual);
         dineroGenerado.getData().add(ganaciasAnuales);
-    }
-
-    public ObservableList<XYChart.Data<String, Integer>> recuperar_datos (){
-        // Crear datos individuales
-        XYChart.Data<String, Integer> enero = new XYChart.Data<>("Enero", 100);
-        XYChart.Data<String, Integer> febrero = new XYChart.Data<>("Febrero", 200);
-        XYChart.Data<String, Integer> marzo = new XYChart.Data<>("Marzo", 300);
-        XYChart.Data<String, Integer> abril = new XYChart.Data<>("Abril", 400);
-        XYChart.Data<String, Integer> mayo = new XYChart.Data<>("Mayo", 500);
-        XYChart.Data<String, Integer> junio = new XYChart.Data<>("Junio", 600);
-        XYChart.Data<String, Integer> julio = new XYChart.Data<>("Julio", 700);
-        XYChart.Data<String, Integer> agosto = new XYChart.Data<>("Agosto", 800);
-        XYChart.Data<String, Integer> septiembre = new XYChart.Data<>("Septiembre", 900);
-        XYChart.Data<String, Integer> octubre = new XYChart.Data<>("Octubre", 1000);
-        XYChart.Data<String, Integer> noviembre = new XYChart.Data<>("Noviembre", 1100);
-        XYChart.Data<String, Integer> diciembre = new XYChart.Data<>("Diciembre", 1200);
-
-        // Crear lista observable y agregar datos
-        ObservableList<XYChart.Data<String, Integer>> datosVentas = FXCollections.observableArrayList(
-                enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre
-        );
-        return datosVentas;
     }
 
     public void setScene(Scene scene) {

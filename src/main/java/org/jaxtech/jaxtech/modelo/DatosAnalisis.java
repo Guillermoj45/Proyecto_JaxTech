@@ -30,7 +30,7 @@ public class DatosAnalisis {
         this.uVendidas = uVendidas;
         this.ganancias = ganancias;
     }
-    
+
     public static ObservableList<XYChart.Data<String, Double>> cantidadComprasAnuales() {
         String sql = """
                 SELECT
@@ -101,7 +101,7 @@ public class DatosAnalisis {
         }
     }
 
-    public static ObservableList<XYChart.Data<String, Double>> gananciasAnuales (){
+    public static ObservableList<XYChart.Data<String, Double>> gananciasAnuales() {
         String sql = """
                 SELECT
                     MONTHNAME(DATE_ADD(CURDATE(), INTERVAL - (n.n - 1) MONTH)) AS mes,

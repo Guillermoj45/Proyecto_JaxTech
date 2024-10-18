@@ -25,7 +25,7 @@
             <TableColumn fx:id="columTablaProductosApto" prefWidth="104.66668701171875" text="Apto para gamin " />
         </columns>
       </TableView>
-      <Button fx:id="buttAñadir" disable="true" layoutX="248.0" layoutY="341.0" mnemonicParsing="false" onAction="#agregar_producto" onMouseClicked="#activarBoton" style="-fx-background-color: #53A548; -fx-text-fill: white;" text="Añadir al Carrito" />
+      <Button fx:id="buttAgregar" disable="true" layoutX="248.0" layoutY="341.0" mnemonicParsing="false" onAction="#agregar_producto" onMouseClicked="#activarBoton" style="-fx-background-color: #53A548; -fx-text-fill: white;" text="Añadir al Carrito" />
       <ImageView fitHeight="53.0" fitWidth="61.0" layoutX="532.0" layoutY="6.0" onMouseClicked="#carrito" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/Carro.png" />

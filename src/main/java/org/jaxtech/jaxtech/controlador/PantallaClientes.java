@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class PantallaClientes {
     @FXML
-    public Button buttAñadir;
+    public Button buttAgregar;
 
     @FXML
     private TableColumn<Producto, Boolean> columTablaProductosApto;
@@ -149,6 +149,6 @@ public class PantallaClientes {
     }
 
     public void activarBoton() {
-        buttAñadir.setDisable(false);
+        buttAgregar.setDisable(false);
     }
 }
