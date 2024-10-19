@@ -25,7 +25,7 @@ public class PantallaClientes {
     public Button buttAgregar; // Botón para agregar productos al carrito
 
     @FXML
-    private TableColumn<Producto, Boolean> columTablaProductosApto; // Columna para indicar si el producto es apto para gaming
+    private TableColumn<Producto, Float> columnTablaPrecio; // Columna para indicar si el producto es apto para gaming
 
     @FXML
     private TableColumn<Producto, Image> columTablaProductosImagene; // Columna para mostrar la imagen del producto
@@ -54,7 +54,7 @@ public class PantallaClientes {
         columTablaProductosNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         columTablaProductosTipo.setCellValueFactory(cellData -> cellData.getValue().tipoProperty());
         columTablaProductosStock.setCellValueFactory(cellData -> cellData.getValue().stockProperty().asObject());
-        columTablaProductosApto.setCellValueFactory(cellData -> cellData.getValue().aptoGamingProperty());
+        columnTablaPrecio.setCellValueFactory(cellData -> cellData.getValue().precioProperty().asObject());
         columTablaProductosImagene.setCellValueFactory(cellData -> cellData.getValue().imagenProperty());
         columTablaProductosImagene.setCellFactory(column -> new ImageTableCell());
 
@@ -137,7 +137,7 @@ public class PantallaClientes {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/carritoClientes.fxml"));
             Parent root = fxmlLoader.load();
             CarritoClientes carritoClientes = fxmlLoader.getController();
-            carritoClientes.setProductos(productosCarrito);
+            carritoClientes.setProductos(productosCarrito, productos, this);
             carritoClientes.setUsuario(usuario);
             Scene nuevaScena = new Scene(root);
             Stage stage = new Stage();
@@ -158,5 +158,9 @@ public class PantallaClientes {
     public void activarBoton() {
         // Activa el botón de agregar producto
         buttAgregar.setDisable(false);
+    }
+
+    public void actualizarTabla() {
+        tablaProductos.refresh();
     }
 }

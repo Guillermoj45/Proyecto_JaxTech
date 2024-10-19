@@ -1,9 +1,6 @@
 package org.jaxtech.jaxtech.modelo;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 
 /**
  * Clase Producto que representa un producto en la base de datos.
@@ -26,7 +24,7 @@ import java.sql.*;
 public class Producto {
     private int id;
     private String nombre;
-    private String tipoPago;
+    private String tipo;
     private int stock;
     private float precio;
     private Image imagen;
@@ -39,7 +37,7 @@ public class Producto {
     public Producto(Producto producto) {
         this.id = producto.id;
         this.nombre = producto.nombre;
-        this.tipoPago = producto.tipoPago;
+        this.tipo = producto.tipo;
         this.stock = producto.stock;
         this.precio = producto.precio;
         this.imagen = producto.imagen;
@@ -50,16 +48,16 @@ public class Producto {
      * Constructor que inicializa todos los atributos del producto.
      * @param id El ID del producto.
      * @param nombre El nombre del producto.
-     * @param tipoPago El tipo de pago del producto.
+     * @param tipo El tipo de pago del producto.
      * @param stock El stock del producto.
      * @param precio El precio del producto.
      * @param imagen La imagen del producto.
      * @param aptoGaming Indica si el producto es apto para gaming.
      */
-    public Producto(int id, String nombre, String tipoPago, int stock, float precio, Image imagen, boolean aptoGaming) {
+    public Producto(int id, String nombre, String tipo, int stock, float precio, Image imagen, boolean aptoGaming) {
         this.id = id;
         this.nombre = nombre;
-        this.tipoPago = tipoPago;
+        this.tipo = tipo;
         this.stock = stock;
         this.precio = precio;
         this.imagen = imagen;
@@ -69,15 +67,15 @@ public class Producto {
     /**
      * Constructor que inicializa todos los atributos del producto excepto el ID.
      * @param nombre El nombre del producto.
-     * @param tipoPago El tipo de pago del producto.
+     * @param tipo El tipo de pago del producto.
      * @param stock El stock del producto.
      * @param precio El precio del producto.
      * @param imagen La imagen del producto.
      * @param aptoGaming Indica si el producto es apto para gaming.
      */
-    public Producto(String nombre, String tipoPago, int stock, float precio, Image imagen, boolean aptoGaming) {
+    public Producto(String nombre, String tipo, int stock, float precio, Image imagen, boolean aptoGaming) {
         this.nombre = nombre;
-        this.tipoPago = tipoPago;
+        this.tipo = tipo;
         this.stock = stock;
         this.precio = precio;
         this.imagen = imagen;
@@ -106,7 +104,7 @@ public class Producto {
                             "VALUES (?, ?, ?, ?, ?, ?)"
             );
             insert.setString(1, getNombre());
-            insert.setString(2, getTipoPago());
+            insert.setString(2, getTipo());
             insert.setInt(3, getStock());
             insert.setFloat(4, getPrecio());
             insert.setBytes(5, imageBytes);
@@ -226,7 +224,7 @@ public class Producto {
      * @return Una propiedad observable del tipo de pago del producto.
      */
     public ObservableValue<String> tipoProperty() {
-        return new SimpleStringProperty(tipoPago);
+        return new SimpleStringProperty(tipo);
     }
 
     /**
@@ -260,4 +258,24 @@ public class Producto {
     public SimpleIntegerProperty costeTotalProperty() {
         return new SimpleIntegerProperty((int) (precio * stock));
     }
+
+    public SimpleFloatProperty precioProperty() {
+        return new SimpleFloatProperty(precio);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Producto producto = (Producto) o;
+
+        if (id != producto.id) return false;
+        if (Float.compare(precio, producto.precio) != 0) return false;
+        if (!Objects.equals(nombre, producto.nombre)) return false;
+        if (!Objects.equals(tipo, producto.tipo)) return false;
+        if (!Objects.equals(imagen, producto.imagen)) return false;
+        return Objects.equals(aptoGaming, producto.aptoGaming);
+    }
+
 }
