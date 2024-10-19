@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.jaxtech.jaxtech.HelloApplication;
@@ -25,7 +26,7 @@ public class InicioSesion {
 
     // Campo de texto para la contraseña
     @FXML
-    private TextField textFiledPassword;
+    private PasswordField textFiledPassword;
 
     // Campo de texto para el nombre de usuario
     @FXML

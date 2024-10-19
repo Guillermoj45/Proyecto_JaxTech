@@ -25,7 +25,7 @@ public class CrearUsuario {
     @FXML
     public TextField fidelTelefono;
     @FXML
-    public TextField fidelPassword;
+    public PasswordField fidelPassword;
     @FXML
     public CheckBox checkAdmin;
 
@@ -85,6 +85,7 @@ public class CrearUsuario {
                 alert.showAndWait();
                 return;
             }
+
             usuario = new Usuario(
                     fidelNombre.getText(),
                     fidelApellido.getText(),
@@ -94,6 +95,16 @@ public class CrearUsuario {
                     fidelPassword.getText(),
                     checkAdmin.isSelected()
             );
+            if (pantallaAdmin.getUsuarios().contains(usuario) && usuario.exists()) {
+                System.out.println("Usuario ya existe");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Usuario ya existe");
+                alert.setContentText("El usuario ya existe en la base de datos");
+                alert.showAndWait();
+                usuario = null;
+                return;
+            }
             if (!usuario.insert())
                 usuario = null;
             pantallaAdmin.agregarUsuario(usuario);

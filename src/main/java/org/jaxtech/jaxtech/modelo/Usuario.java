@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Clase Usuario que representa un usuario en la base de datos.
@@ -241,6 +242,23 @@ public class Usuario {
     }
 
     /**
+     * Método para saber si un usuario existe en la base de datos.
+     * @return true si el usuario existe, false en caso contrario.
+     */
+    public boolean exists() {
+        String sql = "select exists(SELECT 1 FROM usuarios WHERE nombre = ?)";
+        try{
+            Connection conexion = DDBB.getConexion();
+            PreparedStatement select = conexion.prepareStatement(sql);
+            select.setString(1, this.getNombre());
+            ResultSet resultado = select.executeQuery();
+            return resultado.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Método para obtener una propiedad observable del ID del usuario.
      * @return Una propiedad observable del ID del usuario.
      */
@@ -294,6 +312,16 @@ public class Usuario {
      */
     public javafx.beans.property.SimpleStringProperty numTelefonoProperty() {
         return new javafx.beans.property.SimpleStringProperty(numTelefono);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Usuario usuario = (Usuario) o;
+
+        return Objects.equals(nombre, usuario.nombre);
     }
 
 }

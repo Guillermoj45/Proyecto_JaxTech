@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
 import org.jaxtech.jaxtech.modelo.DDBB;
 import org.jaxtech.jaxtech.modelo.DatosAnalisis;
 import org.jaxtech.jaxtech.modelo.Producto;
@@ -83,6 +84,7 @@ public class PantallaAdmin {
     public TableColumn<DatosAnalisis, Double> columTablaMasVendidoGanancias;
 
     // Listas observables para usuarios y usuarios filtrados
+    @Getter
     private ObservableList<Usuario> usuarios, usuariosfiltrados;
     public String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
 

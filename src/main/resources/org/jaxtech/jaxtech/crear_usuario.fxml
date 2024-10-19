@@ -24,7 +24,7 @@
         <Label layoutX="40.0" layoutY="231.0" style="-fx-text-fill: white;" text="Tipo de pago"/>
         <ChoiceBox fx:id="choiceTipoPago" layoutX="123.0" layoutY="227.0" prefWidth="150.0"
                    style="-fx-background-color: #53A548;"/>
-        <TextField fx:id="fidelPassword" layoutX="123.0" layoutY="264.0" style="-fx-background-color: #53A548;"/>
+        <PasswordField fx:id="fidelPassword" layoutX="123.0" layoutY="264.0" style="-fx-background-color: #53A548;"/>
         <Label layoutX="56.0" layoutY="268.0" style="-fx-text-fill: white;" text="Contraseña" wrapText="true"/>
         <Button layoutX="140.0" layoutY="347.0" mnemonicParsing="false" onAction="#guardarUsuario"
                 style="-fx-background-color: #53A548; -fx-text-fill: white;" text="Guardar"/>
