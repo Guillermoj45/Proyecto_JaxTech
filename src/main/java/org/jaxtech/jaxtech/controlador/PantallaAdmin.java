@@ -1,6 +1,5 @@
 package org.jaxtech.jaxtech.controlador;
 
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +23,12 @@ import java.io.IOException;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
+/**
+ * Controlador para la pantalla de administración.
+ */
 public class PantallaAdmin {
 
+    // Campos de texto para ingresar datos del producto
     @FXML
     public TextField nombreTextFiled;
     @FXML
@@ -38,6 +41,8 @@ public class PantallaAdmin {
     public ImageView productoImg;
     @FXML
     public Image imagen, imagenDefecto;
+
+    // Tabla y columnas para mostrar usuarios
     @FXML
     public TableView<Usuario> tablaUsuarios;
     @FXML
@@ -54,24 +59,34 @@ public class PantallaAdmin {
     public TableColumn<Usuario, String> columApellidos;
     @FXML
     public TableColumn<Usuario, Integer> columID;
+
+    // Botones para modificar, crear y eliminar usuarios
     @FXML
     public Button buttModificarUsuario, buttCrearUsuario, buttEliminarUsuario;
+
+    // ChoiceBox para filtrar usuarios por tipo de pago
     @FXML
     public ChoiceBox<String> filtroPagoChoice;
+
+    // CheckBox para indicar si el producto es apto para gaming
     @FXML
     public CheckBox checkAptoGaming;
+
+    // Gráficos para mostrar datos de ventas
     @FXML
     public AreaChart<String, Double> productosComprados, cantidadDeVentas, dineroGenerado;
+
+    // Tabla y columnas para mostrar los productos más vendidos
     public TableView<DatosAnalisis> tablaMasVendido;
     public TableColumn<DatosAnalisis, String> columTablaMasVendidoNombre;
     public TableColumn<DatosAnalisis, Integer> columTablaMasVendidoNVentas, columTablaMasVendidoUVendidas;
     public TableColumn<DatosAnalisis, Double> columTablaMasVendidoGanancias;
 
-
+    // Listas observables para usuarios y usuarios filtrados
     private ObservableList<Usuario> usuarios, usuariosfiltrados;
     public String[] tiposPago = {"No filtros", "Tarjeta", "Efectivo", "Paypal", "Físico", "Otro"};
 
-
+    // Método de inicialización
     @FXML
     public void initialize() {
         new DDBB();
@@ -98,11 +113,9 @@ public class PantallaAdmin {
         columTablaMasVendidoGanancias.setCellValueFactory(cellData -> cellData.getValue().gananciasProperty().asObject());
         tablaMasVendido.setItems(DatosAnalisis.datosTabla());
 
-
         ObservableList<XYChart.Data<String, Double>> datosVentasAnuales = DatosAnalisis.cantidadComprasAnuales();
         ObservableList<XYChart.Data<String, Double>> cantidadTotalAnual = DatosAnalisis.cantidadDeProductosComprados();
         ObservableList<XYChart.Data<String, Double>> gananciasAnuales = DatosAnalisis.gananciasAnuales();
-
 
         // Crear serie y agregar lista de datos
         XYChart.Series<String, Double> serieVentasAnulaes = new XYChart.Series<>("Ventas anuales", datosVentasAnuales);
@@ -115,15 +128,18 @@ public class PantallaAdmin {
         dineroGenerado.getData().add(ganaciasAnuales);
     }
 
+    // Método para cerrar la escena actual
     public void setScene(Scene scene) {
         ((Stage) scene.getWindow()).close();
     }
 
+    // Método para activar los botones de modificar y eliminar usuario
     public void activarBotones() {
         buttEliminarUsuario.setDisable(false);
         buttModificarUsuario.setDisable(false);
     }
 
+    // Método para eliminar un usuario seleccionado
     public void eliminarUsario() {
         Usuario usuario = tablaUsuarios.getSelectionModel().getSelectedItem();
         usuario.delete();
@@ -132,6 +148,7 @@ public class PantallaAdmin {
             usuariosfiltrados.remove(usuario);
     }
 
+    // Método para crear un nuevo usuario
     public void crearUsuario() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jaxtech/jaxtech/crear_usuario.fxml"));
@@ -151,6 +168,7 @@ public class PantallaAdmin {
         }
     }
 
+    // Método para modificar un usuario existente
     public void modificarUsuario() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jaxtech/jaxtech/crear_usuario.fxml"));
@@ -165,22 +183,24 @@ public class PantallaAdmin {
             PantallaAdmin pantallaAdmin = this;
             controller.inicio(pantallaAdmin, tiposPago, tablaUsuarios.getSelectionModel().getSelectedItem());
 
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    // Método para agregar un usuario a la lista
     public void agregarUsuario(Usuario usuario) {
         usuarios.add(usuario);
         if (usuariosfiltrados != null)
             usuariosfiltrados.add(usuario);
     }
 
+    // Método para actualizar la tabla de usuarios
     public void actualizarTabla() {
         tablaUsuarios.refresh();
     }
 
+    // Método para filtrar usuarios por tipo de pago
     public void filtroUsuariosPorPago() {
         String filtro = filtroPagoChoice.getValue();
         usuariosfiltrados = observableArrayList();
@@ -199,6 +219,7 @@ public class PantallaAdmin {
         }
     }
 
+    // Método para seleccionar una imagen para el producto
     public void seleccionarImagen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
@@ -218,6 +239,7 @@ public class PantallaAdmin {
         }
     }
 
+    // Método para agregar un nuevo producto
     public void agregarProducto() {
         float precio;
         int stock;
@@ -256,6 +278,7 @@ public class PantallaAdmin {
         checkAptoGaming.setSelected(false);
     }
 
+    // Método para mostrar una alerta
     private void alerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);

@@ -18,18 +18,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controlador para gestionar el inicio de sesión.
+ */
 public class InicioSesion {
 
+    // Campo de texto para la contraseña
     @FXML
     private TextField textFiledPassword;
 
+    // Campo de texto para el nombre de usuario
     @FXML
     private TextField textFiledUsuario;
 
+    /**
+     * Método que se ejecuta al iniciar sesión.
+     * @param event El evento de acción.
+     */
     @FXML
     void iniciarSesion(ActionEvent event) {
         int id;
         boolean admin;
+        // Verifica si los campos de usuario y contraseña están vacíos
         if (textFiledUsuario.getText().isEmpty() || textFiledPassword.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -37,15 +47,18 @@ public class InicioSesion {
             alert.setContentText("Por favor, rellene todos los campos");
             alert.showAndWait();
         } else {
+            // Conexión a la base de datos
             Connection conexion = DDBB.getConexion();
             String sql = "SELECT id, nombre, apellidos, direccion, pago, telefono, admin FROM usuarios WHERE nombre = ? AND password = password(?) limit 1";
             Usuario usuario;
             try {
+                // Prepara y ejecuta la consulta SQL
                 PreparedStatement select = conexion.prepareStatement(sql);
                 select.setString(1, textFiledUsuario.getText());
                 select.setString(2, textFiledPassword.getText());
 
                 ResultSet resultado = select.executeQuery();
+                // Verifica si se encontró un usuario con las credenciales proporcionadas
                 if (resultado.next()) {
                     id = resultado.getInt("id");
                     admin = resultado.getBoolean("admin");
@@ -57,6 +70,7 @@ public class InicioSesion {
 
                     usuario = new Usuario(id, nombreUsuario, apellidos, direccion, pago, telefono, admin);
                 } else {
+                    // Muestra un mensaje de error si las credenciales son incorrectas
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Usuario o contraseña incorrectos");
@@ -68,6 +82,7 @@ public class InicioSesion {
                 throw new RuntimeException(e);
             }
             try {
+                // Carga la pantalla correspondiente según el tipo de usuario (admin o cliente)
                 Scene scene = textFiledUsuario.getScene();
                 if (usuario.isAdmin()) {
                     cargarPantallaAdministrador(scene);
@@ -80,6 +95,12 @@ public class InicioSesion {
         }
     }
 
+    /**
+     * Método para cargar la pantalla de usuario.
+     * @param usuario El usuario actual.
+     * @param scene La escena actual.
+     * @throws IOException Si ocurre un error al cargar la pantalla.
+     */
     private void cargarPantallaUsuario(Usuario usuario, Scene scene) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/pantalla_clientes.fxml"));
         Parent root = fxmlLoader.load();
@@ -93,7 +114,11 @@ public class InicioSesion {
         stage.show();
     }
 
-
+    /**
+     * Método para cargar la pantalla de administrador.
+     * @param scene La escena actual.
+     * @throws IOException Si ocurre un error al cargar la pantalla.
+     */
     private void cargarPantallaAdministrador(Scene scene) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/PantallaAdmin.fxml"));
         Parent root = fxmlLoader.load();
@@ -105,6 +130,4 @@ public class InicioSesion {
         PantallaAdmin pantallaAdmin = fxmlLoader.getController();
         pantallaAdmin.setScene(scene);
     }
-
-
 }

@@ -18,6 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.*;
 
+/**
+ * Clase Producto que representa un producto en la base de datos.
+ */
 @Getter
 @Setter
 public class Producto {
@@ -29,6 +32,10 @@ public class Producto {
     private Image imagen;
     private Boolean aptoGaming;
 
+    /**
+     * Constructor que copia los atributos de otro producto.
+     * @param producto El producto a copiar.
+     */
     public Producto(Producto producto) {
         this.id = producto.id;
         this.nombre = producto.nombre;
@@ -39,6 +46,16 @@ public class Producto {
         this.aptoGaming = producto.aptoGaming;
     }
 
+    /**
+     * Constructor que inicializa todos los atributos del producto.
+     * @param id El ID del producto.
+     * @param nombre El nombre del producto.
+     * @param tipoPago El tipo de pago del producto.
+     * @param stock El stock del producto.
+     * @param precio El precio del producto.
+     * @param imagen La imagen del producto.
+     * @param aptoGaming Indica si el producto es apto para gaming.
+     */
     public Producto(int id, String nombre, String tipoPago, int stock, float precio, Image imagen, boolean aptoGaming) {
         this.id = id;
         this.nombre = nombre;
@@ -49,6 +66,15 @@ public class Producto {
         this.aptoGaming = aptoGaming;
     }
 
+    /**
+     * Constructor que inicializa todos los atributos del producto excepto el ID.
+     * @param nombre El nombre del producto.
+     * @param tipoPago El tipo de pago del producto.
+     * @param stock El stock del producto.
+     * @param precio El precio del producto.
+     * @param imagen La imagen del producto.
+     * @param aptoGaming Indica si el producto es apto para gaming.
+     */
     public Producto(String nombre, String tipoPago, int stock, float precio, Image imagen, boolean aptoGaming) {
         this.nombre = nombre;
         this.tipoPago = tipoPago;
@@ -58,6 +84,9 @@ public class Producto {
         this.aptoGaming = aptoGaming;
     }
 
+    /**
+     * Método para insertar el producto en la base de datos.
+     */
     public void insert() {
         Connection conexion = DDBB.getConexion();
         String[] extensiones = imagen.getUrl().split("\\.");
@@ -70,7 +99,6 @@ public class Producto {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
         try {
             PreparedStatement insert = conexion.prepareStatement(
@@ -91,6 +119,10 @@ public class Producto {
         }
     }
 
+    /**
+     * Método estático para obtener una lista observable de productos desde la base de datos.
+     * @return Una lista observable de productos.
+     */
     public static ObservableList<Producto> getProductos() {
         Connection conexion = DDBB.getConexion();
         ObservableList<Producto> productos = FXCollections.observableArrayList();
@@ -120,6 +152,11 @@ public class Producto {
         }
     }
 
+    /**
+     * Método estático para registrar la compra de productos por un usuario.
+     * @param productos La lista de productos comprados.
+     * @param usuario El usuario que realiza la compra.
+     */
     public static void comprados(ObservableList<Producto> productos, Usuario usuario) {
         Connection conexion = DDBB.getConexion();
         try {
@@ -158,38 +195,68 @@ public class Producto {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-
+    /**
+     * Método para obtener si el producto es apto para gaming.
+     * @return true si el producto es apto para gaming, false en caso contrario.
+     */
     public boolean isAptoGaming() {
         return aptoGaming;
     }
 
+    /**
+     * Método para establecer si el producto es apto para gaming.
+     * @param aptoGaming true si el producto es apto para gaming, false en caso contrario.
+     */
     public void setAptoGaming(boolean aptoGaming) {
         this.aptoGaming = aptoGaming;
     }
 
+    /**
+     * Método para obtener una propiedad observable del nombre del producto.
+     * @return Una propiedad observable del nombre del producto.
+     */
     public ObservableValue<String> nombreProperty() {
         return new SimpleStringProperty(nombre);
     }
 
+    /**
+     * Método para obtener una propiedad observable del tipo de pago del producto.
+     * @return Una propiedad observable del tipo de pago del producto.
+     */
     public ObservableValue<String> tipoProperty() {
         return new SimpleStringProperty(tipoPago);
     }
 
+    /**
+     * Método para obtener una propiedad observable del stock del producto.
+     * @return Una propiedad observable del stock del producto.
+     */
     public SimpleIntegerProperty stockProperty() {
         return new SimpleIntegerProperty(stock);
     }
 
+    /**
+     * Método para obtener una propiedad observable de la imagen del producto.
+     * @return Una propiedad observable de la imagen del producto.
+     */
     public ObservableValue<Image> imagenProperty() {
         return new SimpleObjectProperty<>(imagen);
     }
 
+    /**
+     * Método para obtener una propiedad observable de si el producto es apto para gaming.
+     * @return Una propiedad observable de si el producto es apto para gaming.
+     */
     public ObservableValue<Boolean> aptoGamingProperty() {
         return new SimpleBooleanProperty(aptoGaming);
     }
 
+    /**
+     * Método para obtener una propiedad observable del coste total del producto.
+     * @return Una propiedad observable del coste total del producto.
+     */
     public SimpleIntegerProperty costeTotalProperty() {
         return new SimpleIntegerProperty((int) (precio * stock));
     }

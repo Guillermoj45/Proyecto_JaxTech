@@ -17,36 +17,40 @@ import org.jaxtech.jaxtech.modelo.Usuario;
 
 import java.io.IOException;
 
+/**
+ * Controlador para la pantalla de clientes.
+ */
 public class PantallaClientes {
     @FXML
-    public Button buttAgregar;
+    public Button buttAgregar; // Botón para agregar productos al carrito
 
     @FXML
-    private TableColumn<Producto, Boolean> columTablaProductosApto;
+    private TableColumn<Producto, Boolean> columTablaProductosApto; // Columna para indicar si el producto es apto para gaming
 
     @FXML
-    private TableColumn<Producto, Image> columTablaProductosImagene;
+    private TableColumn<Producto, Image> columTablaProductosImagene; // Columna para mostrar la imagen del producto
 
     @FXML
-    private TableColumn<Producto, String> columTablaProductosNombre;
+    private TableColumn<Producto, String> columTablaProductosNombre; // Columna para mostrar el nombre del producto
 
     @FXML
-    private TableColumn<Producto, Integer> columTablaProductosStock;
+    private TableColumn<Producto, Integer> columTablaProductosStock; // Columna para mostrar el stock del producto
 
     @FXML
-    private TableColumn<Producto, String> columTablaProductosTipo;
+    private TableColumn<Producto, String> columTablaProductosTipo; // Columna para mostrar el tipo del producto
 
     @FXML
-    private TableView<Producto> tablaProductos;
+    private TableView<Producto> tablaProductos; // Tabla para mostrar los productos
 
     @Setter
-    Usuario usuario;
-    ObservableList<Producto> productos;
+    Usuario usuario; // Usuario actual
+    ObservableList<Producto> productos; // Lista de productos disponibles
 
-    ObservableList<Producto> productosCarrito;
+    ObservableList<Producto> productosCarrito; // Lista de productos en el carrito
 
     @FXML
     public void initialize() {
+        // Inicializa las columnas de la tabla con las propiedades de los productos
         columTablaProductosNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         columTablaProductosTipo.setCellValueFactory(cellData -> cellData.getValue().tipoProperty());
         columTablaProductosStock.setCellValueFactory(cellData -> cellData.getValue().stockProperty().asObject());
@@ -54,6 +58,7 @@ public class PantallaClientes {
         columTablaProductosImagene.setCellValueFactory(cellData -> cellData.getValue().imagenProperty());
         columTablaProductosImagene.setCellFactory(column -> new ImageTableCell());
 
+        // Obtiene la lista de productos y la asigna a la tabla
         productos = Producto.getProductos();
         tablaProductos.setItems(productos);
         productosCarrito = FXCollections.observableArrayList();
@@ -61,6 +66,7 @@ public class PantallaClientes {
 
     @FXML
     void agregar_producto() {
+        // Agrega el producto seleccionado al carrito
         Producto producto = tablaProductos.getSelectionModel().getSelectedItem();
         if (producto != null) {
             int cantidad;
@@ -105,7 +111,6 @@ public class PantallaClientes {
                 productosCarrito.add(productoCarrito);
             }
 
-
             if (producto.getStock() == 0) {
                 productos.remove(producto);
             }
@@ -115,6 +120,7 @@ public class PantallaClientes {
     }
 
     private int getCantidad() {
+        // Muestra un diálogo para ingresar la cantidad de productos
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Cantidad");
         dialog.setHeaderText("Cantidad de productos");
@@ -126,6 +132,7 @@ public class PantallaClientes {
 
     @FXML
     void carrito() {
+        // Abre la ventana del carrito de compras
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/jaxtech/jaxtech/carritoClientes.fxml"));
             Parent root = fxmlLoader.load();
@@ -144,11 +151,12 @@ public class PantallaClientes {
     }
 
     public void setScene(Scene scene) {
-        // Cerramos la ventana
+        // Cierra la ventana actual
         ((Stage) scene.getWindow()).close();
     }
 
     public void activarBoton() {
+        // Activa el botón de agregar producto
         buttAgregar.setDisable(false);
     }
 }

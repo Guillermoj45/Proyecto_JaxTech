@@ -24,6 +24,7 @@ public class DatosAnalisis {
     private Integer uVendidas;
     private Double ganancias;
 
+    // Constructor de la clase
     public DatosAnalisis(String nombre, Integer nVentas, Integer uVendidas, Double ganancias) {
         this.nombre = nombre;
         this.nVentas = nVentas;
@@ -31,6 +32,7 @@ public class DatosAnalisis {
         this.ganancias = ganancias;
     }
 
+    // Método para obtener la cantidad de compras anuales
     public static ObservableList<XYChart.Data<String, Double>> cantidadComprasAnuales() {
         String sql = """
                 SELECT
@@ -65,6 +67,7 @@ public class DatosAnalisis {
         }
     }
 
+    // Método para obtener la cantidad de productos comprados
     public static ObservableList<XYChart.Data<String, Double>> cantidadDeProductosComprados() {
         String sql = """
                 SELECT
@@ -101,6 +104,7 @@ public class DatosAnalisis {
         }
     }
 
+    // Método para obtener las ganancias anuales
     public static ObservableList<XYChart.Data<String, Double>> gananciasAnuales() {
         String sql = """
                 SELECT
@@ -136,6 +140,7 @@ public class DatosAnalisis {
         }
     }
 
+    // Método para obtener los datos de la tabla
     static public ObservableList<DatosAnalisis> datosTabla() {
         ObservableList<DatosAnalisis> lista = FXCollections.observableArrayList();
         String sql = """
@@ -171,6 +176,7 @@ public class DatosAnalisis {
         }
     }
 
+    // Métodos para obtener las propiedades de los datos
     public ObservableValue<String> nombreProperty() {
         return new SimpleStringProperty(nombre);
     }

@@ -7,7 +7,11 @@ import org.jaxtech.jaxtech.modelo.Usuario;
 
 import java.util.Arrays;
 
+/**
+ * Controlador para la creación y modificación de usuarios.
+ */
 public class CrearUsuario {
+    // Campos de texto para ingresar los datos del usuario
     @FXML
     public TextField fidelNombre;
     @FXML
@@ -25,14 +29,27 @@ public class CrearUsuario {
     @FXML
     public CheckBox checkAdmin;
 
+    // Usuario actual
     Usuario usuario;
+    // Referencia a la pantalla de administración
     PantallaAdmin pantallaAdmin;
 
+    /**
+     * Método de inicialización sin usuario.
+     * @param pantallaAdmin Referencia a la pantalla de administración.
+     * @param tiposPago Tipos de pago disponibles.
+     */
     public void inicio(PantallaAdmin pantallaAdmin, String[] tiposPago) {
         this.pantallaAdmin = pantallaAdmin;
         Arrays.stream(tiposPago).filter(tipo -> !tipo.equals("No filtros")).forEach(tipo -> choiceTipoPago.getItems().add(tipo));
     }
 
+    /**
+     * Método de inicialización con usuario.
+     * @param pantallaAdmin Referencia a la pantalla de administración.
+     * @param tiposPago Tipos de pago disponibles.
+     * @param usuario Usuario a modificar.
+     */
     public void inicio(PantallaAdmin pantallaAdmin, String[] tiposPago, Usuario usuario) {
         this.pantallaAdmin = pantallaAdmin;
         choiceTipoPago.getItems().addAll(tiposPago);
@@ -45,7 +62,11 @@ public class CrearUsuario {
         textTitulo.setText("Modificar Usuario");
     }
 
+    /**
+     * Método para guardar o actualizar un usuario.
+     */
     public void guardarUsuario() {
+        // Validación de campos vacíos
         if (fidelNombre.getText().isEmpty() || fidelApellido.getText().isEmpty() || fidelDireccion.getText().isEmpty() || choiceTipoPago.getValue() == null || fidelTelefono.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -54,6 +75,7 @@ public class CrearUsuario {
             alert.showAndWait();
             return;
         }
+        // Creación de un nuevo usuario
         if (usuario == null) {
             if (fidelPassword.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -76,6 +98,7 @@ public class CrearUsuario {
                 usuario = null;
             pantallaAdmin.agregarUsuario(usuario);
         } else {
+            // Actualización de un usuario existente
             if (!fidelPassword.getText().isEmpty())
                 usuario.setPassword(fidelPassword.getText());
             usuario.setNombre(fidelNombre.getText());
@@ -87,6 +110,7 @@ public class CrearUsuario {
         }
         pantallaAdmin.actualizarTabla();
 
+        // Cierre de la ventana actual
         Stage stage = (Stage) fidelNombre.getScene().getWindow();
         stage.close();
     }
