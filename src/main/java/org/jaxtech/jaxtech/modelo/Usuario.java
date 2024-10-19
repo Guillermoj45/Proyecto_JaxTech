@@ -17,15 +17,15 @@ import java.sql.SQLException;
 @Getter
 @Setter
 public class Usuario {
-    Integer id;
-    String nombre;
-    String apellidos;
-    String direccion;
-    String tipoPago;
-    String numTelefono;
-    Integer totalPedidos;
-    String password;
-    boolean admin;
+    private Integer id;
+    private String nombre;
+    private String apellidos;
+    private String direccion;
+    private String tipoPago;
+    private String numTelefono;
+    private Integer totalPedidos;
+    private String password;
+    private boolean admin;
 
     /**
      * Constructor que inicializa todos los atributos del usuario.

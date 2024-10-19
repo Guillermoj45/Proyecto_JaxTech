@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class DDBB {
     // Variables para almacenar la URL, usuario y contraseña de la base de datos
-    String url, user, password;
+    private String url, user, password;
     // Variable estática para la conexión a la base de datos
-    static Connection conexion;
+    private static Connection conexion;
 
     // Constructor de la clase DDBB
     public DDBB() {
