@@ -50,7 +50,12 @@ public class InicioSesion {
         } else {
             // Conexión a la base de datos
             Connection conexion = DDBB.getConexion();
-            String sql = "SELECT id, nombre, apellidos, direccion, pago, telefono, admin FROM usuarios WHERE nombre = ? AND password = password(?) limit 1";
+            String sql = """
+                    SELECT id, nombre, apellidos, direccion, pago, telefono, admin
+                    FROM usuarios
+                    WHERE nombre = ? AND password = password(?) and eliminado = false
+                    limit 1
+                    """;
             Usuario usuario;
             try {
                 // Prepara y ejecuta la consulta SQL

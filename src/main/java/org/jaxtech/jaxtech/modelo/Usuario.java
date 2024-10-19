@@ -252,7 +252,8 @@ public class Usuario {
             PreparedStatement select = conexion.prepareStatement(sql);
             select.setString(1, this.getNombre());
             ResultSet resultado = select.executeQuery();
-            return resultado.next();
+            resultado.next();
+            return resultado.getBoolean(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

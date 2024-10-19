@@ -26,25 +26,6 @@ create or replace table usuarios
     eliminado boolean default false
 );
 
-select length(usuarios.password)
-from usuarios;
-
-SELECT id,
-       nombre,
-       apellidos,
-       direccion,
-       pago,
-       telefono,
-       (select count(*) from productos where usuarios.id = productos.id) 'Pedidos'
-FROM usuarios;
-
-explain extended
-SELECT u.id, u.nombre, u.apellidos, u.direccion, u.pago, u.telefono, COUNT(p.id) AS Pedidos
-FROM usuarios u
-         LEFT JOIN productos p ON u.id = p.id
-GROUP BY u.id;
-
-drop table pedidos;
 
 create table multipedidos
 (

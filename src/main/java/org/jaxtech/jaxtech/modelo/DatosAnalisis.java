@@ -48,7 +48,7 @@ public class DatosAnalisis {
                 GROUP BY
                     n.n
                 ORDER BY
-                    n.n;
+                    n.n desc;
                 """;
         Connection conexion = DDBB.getConexion();
         try {
@@ -84,7 +84,7 @@ public class DatosAnalisis {
                 GROUP BY
                      n.n
                 ORDER BY
-                     n.n;
+                     n.n desc ;
                 """;
         Connection conexion = DDBB.getConexion();
         try {
@@ -121,7 +121,7 @@ public class DatosAnalisis {
                 GROUP BY
                     n.n
                 ORDER BY
-                    n.n;
+                    n.n desc ;
                 """;
         Connection conexion = DDBB.getConexion();
         try {
@@ -156,7 +156,7 @@ public class DatosAnalisis {
                 GROUP BY
                     p.id
                 ORDER BY
-                    nVentas DESC
+                    uVendidas DESC
                     LIMIT 5;
                 """;
         Connection conexion = DDBB.getConexion();

@@ -95,7 +95,8 @@ public class CrearUsuario {
                     fidelPassword.getText(),
                     checkAdmin.isSelected()
             );
-            if (pantallaAdmin.getUsuarios().contains(usuario) && usuario.exists()) {
+
+            if (pantallaAdmin.getUsuarios().contains(usuario) || usuario.exists()) {
                 System.out.println("Usuario ya existe");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
