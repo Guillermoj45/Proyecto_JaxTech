@@ -38,3 +38,6 @@ build/
 .DS_Store
 
 ./.env
+.idea/dataSources
+.idea/dataSources.xml
+.idea/dataSources.local.xml
